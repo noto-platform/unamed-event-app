@@ -1,7 +1,7 @@
-import firebase from "firebase"
-import { firebaseConfig } from "../config";
+import firebase from "firebase";
+import { firebaseConfig } from "config";
 
-import { events } from "../store/initialState"
+import { events } from "store/initialState";
 
 firebase.initializeApp(firebaseConfig);
 

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "proptypes";
 import { Provider } from "react-redux";
+
 import router from "./Router";
 
 class Firebase extends React.PureComponent {

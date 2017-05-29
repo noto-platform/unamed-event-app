@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "proptypes";
-import { connect } from "react-redux";
 import {
   compose,
   getContext,
@@ -8,9 +7,6 @@ import {
   withState,
   withHandlers,
 } from "recompose";
-
-import { changeAuthState, authFailure } from "store/auth/actions";
-import { selectAuth } from "store/auth/selectors";
 
 const EventPage = ({ events }) => (
   <div>
