@@ -1,18 +1,23 @@
-import { applyMiddleware, createStore, combineReducers, compose } from "redux";
-import logger from "redux-logger";
-import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import { firebaseConfig } from "../config";
-import reducer from "./reducer";
-
 import firebase from "../services/firebase";
+import rootReducer from './reducers';
 
-export default function configureStore(initialState = {}) {
-  const middlewares = [
-    thunk.withExtraArgument({ firebase }),
-    logger
-  ]
-  const store = createStore(reducer, applyMiddleware(...middlewares));
 
-  return store;
-}
+const configureStore = () => {
+  const middlewares = [thunk.withExtraArgument({ firebase })];
+
+  if (process.env.NODE_ENV !== 'production') {
+    middlewares.push(createLogger());
+  }
+
+  return createStore(
+    rootReducer,
+    applyMiddleware(...middlewares)
+  );
+};
+
+export default configureStore;
