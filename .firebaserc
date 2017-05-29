@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "default": "eventplatform-1430d"
+  }
+}
