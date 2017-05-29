@@ -3,8 +3,8 @@ import PropTypes from "proptypes";
 import { connect } from "react-redux";
 import { compose, lifecycle, getContext } from "recompose";
 
-import { changeAuthState, authFailure } from "../store/auth/actions";
-import { selectAuth } from "../store/auth/selectors";
+import { changeAuthState, authFailure } from "store/auth/actions";
+import { selectAuth } from "store/auth/selectors";
 
 const AuthPage = ({ auth, onLogin }) => (
   <div>
