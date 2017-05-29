@@ -1,11 +1,27 @@
-import { handleActions } from 'redux-actions';
+import { handleActions } from "redux-actions";
 
-export const initialState = {
-  user: 'Johan Testsson'
-};
+import * as a from "./actions";
 
-export default handleActions({
-  ['TEST']: (state, action) => ({
-    ...state,
-  })
-}, initialState);
+export const initialState = {};
+
+export default handleActions(
+  {
+    [a.changeAuthState]: (state, { payload }) => ({
+      ...state,
+      "uid": payload.uid,
+      "displayName": payload.displayName,
+      "photoURL": payload.photoURL,
+      "email": payload.email,
+      "emailVerified": payload.emailVerified,
+      "phoneNumber": payload.phoneNumber,
+      "isAnonymous": payload.isAnonymous,
+      "providerData": payload.providerData,
+      "apiKey": payload.apiKey,
+      "appName": payload.appName,
+      "authDomain": payload.authDomain,
+      "stsTokenManager": payload.stsTokenManager,
+      "redirectEventId": payload.redirectEventId
+    }),
+  },
+  initialState,
+);
