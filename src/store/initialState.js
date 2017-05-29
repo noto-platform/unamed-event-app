@@ -17,3 +17,14 @@ export default {
     }
   }
 }
+
+export const events = ["masthuggsgunget", "hela dagen lång"].map(title => ({
+  created_at: Date.now(),
+  owner: "foo",
+  title,
+  start_time: Date.now() * 1000 * 60 * 60 * 24 * 1,
+  end_time: Date.now() * 1000 * 60 * 60 * 24 * 2,
+  attendees: [],
+  invited: [],
+  media: []
+}))
