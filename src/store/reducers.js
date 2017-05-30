@@ -1,6 +1,14 @@
+import camelCase from "camelcase";
+
 import { combineReducers } from "redux";
-import auth from "./auth/reducer";
 
-const rootReducer = combineReducers({ auth });
+const reducers = {}
 
-export default rootReducer;
+const req = require.context('.', true, /\.\/.+\/reducer\.js$/)
+
+req.keys().forEach((key) => {
+  const storeName = camelCase(key.replace(/\.\/(.+)\/.+$/, '$1'))
+  reducers[storeName] = req(key).default
+})
+
+export default combineReducers(reducers)

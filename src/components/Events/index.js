@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "proptypes";
 
-const Events = ({ events }) => (
+const Events = ({ list }) => (
   <div>
-    <pre>{JSON.stringify(events, null, 2)}</pre>
+    <pre>{JSON.stringify(list, null, 2)}</pre>
   </div>
 );
 
