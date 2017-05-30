@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "camelcase": "^4.1.0",
     "firebase": "^4.0.0",
     "proptypes": "^1.0.0",
+    "ramda": "^0.24.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
