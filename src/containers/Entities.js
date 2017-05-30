@@ -9,33 +9,31 @@ import {
   withHandlers,
 } from "recompose";
 
-import Events from "components/Events";
-
 import { updateEntities } from "store/actions";
-import { makeSelectEntities } from "store/entities/selectors";
+import { getListOfType } from "store/entities/selectors";
 
 const withEntities = entityType =>
   compose(
     getContext({ firebase: PropTypes.object }),
-    connect(makeSelectEntities(entityType), { updateEntities }),
+    connect(getListOfType(entityType), { updateEntities }),
     withHandlers({
       update: ({ updateEntities }) => snap =>
         updateEntities(entityType, snap.val()),
     }),
-    mapProps(({firebase, entityType, ...props}) => ({
+    mapProps(({ firebase, ...props }) => ({
       ...props,
-      firebaseRef: firebase.database().ref(entityType)
+      dbRef: firebase.database().ref(entityType),
     })),
     lifecycle({
       componentWillMount() {
-        const { firebaseRef, update } = this.props;
-        firebaseRef.on("value", update);
+        const { dbRef, update } = this.props;
+        dbRef.on("value", update);
       },
       componentWillUnmount() {
-        const { firebaseRef, update } = this.props;
-        firebaseRef.off("value", update);
+        const { dbRef, update } = this.props;
+        dbRef.off("value", update);
       },
     }),
   );
 
-export default withEntities("events")(Events);
+export default withEntities;

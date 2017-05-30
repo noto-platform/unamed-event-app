@@ -2,9 +2,13 @@ import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import withEntities from "./Entities";
+
 import Auth from "./Auth";
-import Events from "./Events";
+import EventsView from "components/Events";
 import Firebase from "./Firebase";
+
+const Events = withEntities("events")(EventsView);
 
 const Home = () => <div>Home testing</div>;
 

@@ -3,10 +3,10 @@ import { createSelector } from "reselect";
 
 export const initialState = {};
 
-export const makeSelectEntities = entity =>
+export const getListOfType = type =>
   createSelector(
     state => state.entities,
-    state => ({
-      list: R.values(state[entity]),
+    entities => ({
+      list: R.values(entities[type]),
     }),
   );
