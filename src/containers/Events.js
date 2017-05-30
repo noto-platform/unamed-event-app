@@ -1,4 +1,4 @@
-import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "proptypes";
 import {
   compose,
@@ -8,21 +8,27 @@ import {
   withHandlers,
 } from "recompose";
 
-import EventPage from "components/Events";
+import Events from "components/Events";
 
-const withEvents = compose(
+import { updateEntities } from "store/entities/actions";
+import { createEvent } from "store/events/actions";
+import { makeSelectEntities } from "store/entities/selectors";
+
+const entityType = "events"; // TODO: move to props and make container generic for all entites
+
+const withEntities = compose(
   getContext({ firebase: PropTypes.object }),
-  withState("events", "update", {}),
+  connect(makeSelectEntities(entityType), { createEvent, updateEntities }),
   lifecycle({
     componentWillMount() {
-      const { firebase, update } = this.props;
+      const { firebase, updateEntities } = this.props;
 
       firebase
         .database()
-        .ref("events")
-        .on("value", snap => update(Object.values(snap.val())));
+        .ref(entityType)
+        .on("value", snap => updateEntities(entityType, snap.val()));
     },
   }),
 );
 
-export default withEvents(EventPage);
+export default withEntities(Events);

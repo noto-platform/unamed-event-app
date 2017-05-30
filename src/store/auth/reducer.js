@@ -1,27 +1,32 @@
-import { handleActions } from "redux-actions";
+import R from 'ramda';
+import { handleActions } from 'redux-actions';
 
-import * as a from "./actions";
+import { initialState } from "./selectors";
 
-export const initialState = {};
+import * as a from './actions';
+
+const pickAuth = R.pick([
+  'uid',
+  'displayName',
+  'photoURL',
+  'email',
+  'emailVerified',
+  'phoneNumber',
+  'isAnonymous',
+  'providerData',
+  'apiKey',
+  'appName',
+  'authDomain',
+  'stsTokenManager',
+  'redirectEventId',
+]);
 
 export default handleActions(
   {
     [a.changeAuthState]: (state, { payload }) => ({
       ...state,
-      uid: payload.uid,
-      displayName: payload.displayName,
-      photoURL: payload.photoURL,
-      email: payload.email,
-      emailVerified: payload.emailVerified,
-      phoneNumber: payload.phoneNumber,
-      isAnonymous: payload.isAnonymous,
-      providerData: payload.providerData,
-      apiKey: payload.apiKey,
-      appName: payload.appName,
-      authDomain: payload.authDomain,
-      stsTokenManager: payload.stsTokenManager,
-      redirectEventId: payload.redirectEventId,
-    }),
+      ...pickAuth(payload)
+    })
   },
   initialState,
 );

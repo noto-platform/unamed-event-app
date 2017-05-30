@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "proptypes";
-import { Provider } from "react-redux";
 
 class Firebase extends React.PureComponent {
   static childContextTypes = {
