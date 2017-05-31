@@ -1,26 +1,24 @@
 import PropTypes from "proptypes";
 import { connect } from "react-redux";
-import { compose, lifecycle, getContext } from "recompose";
+import { compose, lifecycle, getContext, withHandlers } from "recompose";
 
 import Auth from "components/Auth";
 
 import { changeAuthState, authFailure } from "store/auth/actions";
 import { selectAuth } from "store/auth/selectors";
-
-const mapDispatchToProps = (dispatch, { firebase }) => {
-  return {
-    onLogin: () => firebase.auth().signInAnonymously().catch(authFailure),
-    changeAuthState: user => // Stupid, sends either null or function object
-      dispatch(changeAuthState(user ? user : {})),
-  };
-};
+import { linkAccount, signInAnonymously } from "store/auth/logic";
 
 const withAuth = compose(
   getContext({ firebase: PropTypes.object }),
-  connect(selectAuth, mapDispatchToProps),
+  connect(selectAuth, { changeAuthState, authFailure }),
+  withHandlers({
+    onLogin: signInAnonymously,
+    onFacebookConnect: linkAccount,
+  }),
   lifecycle({
-    componentWillMount() {
+    componentDidMount() {
       const { firebase, changeAuthState } = this.props;
+
       firebase.auth().onAuthStateChanged(changeAuthState);
     },
   }),
