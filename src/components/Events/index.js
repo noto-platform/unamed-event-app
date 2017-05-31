@@ -7,4 +7,4 @@ const Events = ({ list }) => (
   </div>
 );
 
-export default Events
+export default Events;
