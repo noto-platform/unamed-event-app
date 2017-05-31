@@ -12,7 +12,11 @@ const configureStore = (initialState = {}, { firebase }) => {
     middlewares.push(createLogger());
   }
 
-  return createStore(rootReducer, applyMiddleware(...middlewares));
+  return createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(...middlewares)
+  );
 };
 
 export default configureStore;
