@@ -8,13 +8,13 @@ const geolocation = {
       _watcherId = navigator.geolocation.watchPosition(
         onSuccess,
         onError,
-        opts,
+        opts
       );
     } else {
       const mockLocation = {
         accuracy: 47,
         latitude: 57.6959,
-        longitude: 11.9656,
+        longitude: 11.9656
       };
       setTimeout(() => onSuccess(mockLocation), 2000);
       _watcherId = setInterval(() => onSuccess(mockLocation), 60000);
@@ -26,7 +26,7 @@ const geolocation = {
     } else {
       clearInterval(_watcherId);
     }
-  },
+  }
 };
 
 export default geolocation;

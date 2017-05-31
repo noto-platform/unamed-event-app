@@ -18,15 +18,15 @@ const pickAuth = pick([
   "appName",
   "authDomain",
   "stsTokenManager",
-  "redirectEventId",
+  "redirectEventId"
 ]);
 
 export default handleActions(
   {
     [a.changeAuthState]: (state, { payload }) => ({
       ...state, // Stupid null-check
-      ...pickAuth(payload || {}),
-    }),
+      ...pickAuth(payload || {})
+    })
   },
-  initialState,
+  initialState
 );

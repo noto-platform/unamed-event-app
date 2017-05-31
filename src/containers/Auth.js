@@ -13,15 +13,15 @@ const withAuth = compose(
   connect(selectAuth, { changeAuthState, authFailure }),
   withHandlers({
     onLogin: signInAnonymously,
-    onFacebookConnect: linkAccount,
+    onFacebookConnect: linkAccount
   }),
   lifecycle({
     componentDidMount() {
       const { firebase, changeAuthState } = this.props;
 
       firebase.auth().onAuthStateChanged(changeAuthState);
-    },
-  }),
+    }
+  })
 );
 
 export default withAuth(Auth);

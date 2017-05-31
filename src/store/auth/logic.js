@@ -4,7 +4,7 @@ export const signInAnonymously = ({ firebase, authFailure }) => () =>
 export const linkAccount = ({
   firebase: { auth },
   changeAuthState,
-  authFailure,
+  authFailure
 }) => ({ accessToken }) => {
   const credential = auth.FacebookAuthProvider.credential(accessToken);
   const { currentUser } = auth();

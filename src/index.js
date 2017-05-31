@@ -13,9 +13,8 @@ import geolocation from "services/geolocation";
 
 const store = configureStore();
 
-console.log(geolocation)
 ReactDOM.render(
   <App store={store} firebase={firebase} geolocation={geolocation} />,
-  document.getElementById("root"),
+  document.getElementById("root")
 );
 registerServiceWorker();

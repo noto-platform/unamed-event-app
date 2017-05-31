@@ -9,8 +9,8 @@ export default handleActions(
     [a.locateSuccess]: (state, { payload }) =>
       set(
         lensProp("me"),
-        pick(["accuracy", "latitude", "longitude"] /* from */, payload),
-      )(/* with */state),
+        pick(["accuracy", "latitude", "longitude"] /* from */, payload)
+      )(/* with */ state)
   },
-  initialState,
+  initialState
 );

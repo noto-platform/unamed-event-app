@@ -1,9 +1,9 @@
-const req = require.context('.', true, /\.\/.+\/actions\.js$/)
+const req = require.context(".", true, /\.\/.+\/actions\.js$/);
 
-req.keys().forEach((key) => {
-  const actions = req(key)
+req.keys().forEach(key => {
+  const actions = req(key);
 
-  Object.keys(actions).forEach((name) => {
-    module.exports[name] = actions[name]
-  })
-})
+  Object.keys(actions).forEach(name => {
+    module.exports[name] = actions[name];
+  });
+});

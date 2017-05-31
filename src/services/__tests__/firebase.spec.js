@@ -6,10 +6,6 @@ import firebase from "../firebase";
 
 */
 
-test("auth", () => {
+test("auth", () => {});
 
-});
-
-test("db", () => {
-
-});
+test("db", () => {});

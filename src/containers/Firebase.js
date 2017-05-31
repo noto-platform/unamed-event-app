@@ -3,12 +3,12 @@ import PropTypes from "proptypes";
 
 class Firebase extends React.PureComponent {
   static childContextTypes = {
-    firebase: PropTypes.object,
+    firebase: PropTypes.object
   };
 
   getChildContext() {
     return {
-      firebase: this.props.firebase,
+      firebase: this.props.firebase
     };
   }
 

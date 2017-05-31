@@ -10,13 +10,13 @@ const withLocation = compose(
     componentDidMount() {
       const { locateSuccess, locateFailure, geolocation } = this.props;
       this._id = geolocation.watchPosition(locateSuccess, locateFailure, {
-        timeout: 10000,
+        timeout: 10000
       });
     },
     componentWillUnmount() {
       this.props.geolocation.clearWatch(this._id);
-    },
-  }),
+    }
+  })
 );
 
 export default withLocation(() => null);

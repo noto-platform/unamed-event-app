@@ -8,5 +8,5 @@ export default handleActions(
   {
     [a.updateEntities]: (state, { payload }) => R.merge(state, payload)
   },
-  initialState,
+  initialState
 );

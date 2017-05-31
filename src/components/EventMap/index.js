@@ -12,12 +12,14 @@ const EventMap = ({ center, markers }) => (
     zoom={[14]}
     containerStyle={{
       height: "100vh",
-      width: "100vw",
+      width: "100vw"
     }}
-  >{markers.map((marker, i) =>
-    <Layer type="symbol" id={i} layout={{ "icon-image": "marker-15" }}>
-      <Feature coordinates={[marker.coords]} />
-    </Layer>)}
+  >
+    {markers.map((marker, i) => (
+      <Layer type="symbol" id={i} layout={{ "icon-image": "marker-15" }}>
+        <Feature coordinates={[marker.coords]} />
+      </Layer>
+    ))}
   </ReactMapboxGl>
 );
 

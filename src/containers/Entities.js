@@ -6,7 +6,7 @@ import {
   lifecycle,
   mapProps,
   withState,
-  withHandlers,
+  withHandlers
 } from "recompose";
 
 import { updateEntities } from "store/actions";
@@ -18,11 +18,11 @@ const withEntities = entityType =>
     connect(getListOfType(entityType), { updateEntities }),
     withHandlers({
       update: ({ updateEntities }) => snap =>
-        updateEntities(entityType, snap.val()),
+        updateEntities(entityType, snap.val())
     }),
     mapProps(({ firebase, ...props }) => ({
       ...props,
-      dbRef: firebase.database().ref(entityType),
+      dbRef: firebase.database().ref(entityType)
     })),
     lifecycle({
       componentWillMount() {
@@ -32,8 +32,8 @@ const withEntities = entityType =>
       componentWillUnmount() {
         const { dbRef, update } = this.props;
         dbRef.off("value", update);
-      },
-    }),
+      }
+    })
   );
 
 export default withEntities;

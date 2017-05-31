@@ -16,7 +16,7 @@ export default {
       media: []
     }
   }
-}
+};
 
 export const events = ["masthuggsgunget", "hela dagen lång"].map(title => ({
   created_at: Date.now(),
@@ -27,4 +27,4 @@ export const events = ["masthuggsgunget", "hela dagen lång"].map(title => ({
   attendees: [],
   invited: [],
   media: []
-}))
+}));
