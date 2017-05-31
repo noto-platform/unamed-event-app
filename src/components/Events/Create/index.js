@@ -3,15 +3,14 @@ import React from "react";
 // TODO
 // Use date pickers for start and end time ?
 
-const CreateEvent = ({ ...state, handleCreateEvent }) => (
+const CreateEvent = ({ setField, ...fields, handleCreateEvent }) => (
   <div>
     <h4>Create event</h4>
     <p>
       <input
         type="text"
         placeholder="Title"
-        onChange={state.setTitle}
-        value={state.title}
+        onChange={e => setField("title", e)}
       />
     </p>
     <p>
@@ -19,30 +18,26 @@ const CreateEvent = ({ ...state, handleCreateEvent }) => (
         type="text"
         placeholder="Description"
         rows="5"
-        onChange={state.setDescription}
-        value={state.description}
+        onChange={e => setField("description", e)}
       />
     </p>
     <p>
       <input
         type="number"
         placeholder="Attendees"
-        onChange={state.setAttendees}
-        value={state.attendees}
+        onChange={e => setField("attendees", e)}
       />
     </p>
     <p>
       <input
         type="number"
         placeholder="Star time"
-        onChange={state.setStartTime}
-        value={state.startTime}
+        onChange={e => setField("startTime", e)}
       />
       <input
         type="number"
         placeholder="End time"
-        onChange={state.setEndTime}
-        value={state.endTime}
+        onChange={e => setField("endTime", e)}
       />
     </p>
     <p>
