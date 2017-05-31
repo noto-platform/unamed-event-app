@@ -1,6 +1,6 @@
 import { isEmpty, pick } from "ramda";
 import { handleActions } from "redux-actions";
-
+import { isNil } from "ramda";
 import { initialState } from "./selectors";
 
 import * as a from "./actions";
@@ -25,7 +25,7 @@ export default handleActions(
   {
     [a.changeAuthState]: (state, { payload }) => ({
       ...state, // Stupid null-check
-      ...pickAuth(payload === null ? {} : payload),
+      ...pickAuth(payload || {}),
     }),
   },
   initialState,
