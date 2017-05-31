@@ -11,7 +11,7 @@ import App from "containers/App";
 import firebase from "services/firebase";
 import geolocation from "services/geolocation";
 
-const store = configureStore();
+const store = configureStore(undefined, { firebase });
 
 ReactDOM.render(
   <App store={store} firebase={firebase} geolocation={geolocation} />,

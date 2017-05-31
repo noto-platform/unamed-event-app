@@ -3,10 +3,9 @@ import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 
 import { firebaseConfig } from "../config";
-import firebase from "services/firebase";
 import rootReducer from "./reducers";
 
-const configureStore = () => {
+const configureStore = (initialState = {}, { firebase }) => {
   const middlewares = [thunk.withExtraArgument({ firebase })];
 
   if (process.env.NODE_ENV !== "production") {
