@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import withEntities from "./Entities";
 
 import Auth from "./Auth";
+import GeoLocation from "./GeoLocation";
 import EventsView from "components/Events";
 import Firebase from "./Firebase";
 
@@ -12,9 +13,12 @@ const Events = withEntities("events")(EventsView);
 
 const Home = () => <div>Home testing</div>;
 
-const App = ({ store, firebase }) => (
+const App = ({ store, firebase, geolocation }) => (
   <Provider store={store}>
     <Firebase firebase={firebase}>
+      <GeoLocation geolocation={geolocation} />
+      <Auth />
+
       <Router>
         <div>
           <ul>
@@ -24,7 +28,6 @@ const App = ({ store, firebase }) => (
           </ul>
 
           <Route exact path="/" component={Home} />
-          <Route path="/login" component={Auth} />
           <Route path="/events" component={Events} />
         </div>
 
