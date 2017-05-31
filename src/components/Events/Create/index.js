@@ -3,9 +3,10 @@ import React from "react";
 // TODO
 // Use date pickers for start and end time ?
 
-const CreateEvent = ({ setField, ...fields, handleCreateEvent }) => (
-  <div>
+const CreateEvent = ({ setField, handleCreateEvent, auth }) => (
+  <form onSubmit={handleCreateEvent}>
     <h4>Create event</h4>
+    <i>Debug Owner: {auth.uid}</i>
     <p>
       <input
         type="text"
@@ -18,32 +19,32 @@ const CreateEvent = ({ setField, ...fields, handleCreateEvent }) => (
         type="text"
         placeholder="Description"
         rows="5"
-        onChange={e => setField("description", e)}
+        onChange={e => setField("desc", e)}
       />
     </p>
     <p>
       <input
         type="number"
-        placeholder="Attendees"
-        onChange={e => setField("attendees", e)}
+        placeholder="Max attendees"
+        onChange={e => setField("max_attendees", e)}
       />
     </p>
     <p>
       <input
         type="number"
         placeholder="Star time"
-        onChange={e => setField("startTime", e)}
+        onChange={e => setField("start_time", e)}
       />
       <input
         type="number"
         placeholder="End time"
-        onChange={e => setField("endTime", e)}
+        onChange={e => setField("end_time", e)}
       />
     </p>
     <p>
-      <button onClick={handleCreateEvent}>Create</button>
+      <button type="submit">Create</button>
     </p>
-  </div>
+  </form>
 );
 
 export default CreateEvent;
