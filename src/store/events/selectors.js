@@ -1,14 +1,3 @@
-import {
-  isEmpty,
-  pick,
-  pickAll,
-  compose,
-  hasIn,
-  pipeK,
-  mergeAll,
-  view,
-  lensProp
-} from "ramda";
 import { pickAuth, pickProviderId } from "../auth/reducer";
 
 export const initialState = {};

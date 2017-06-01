@@ -7,7 +7,7 @@ import {
 // TODO
 // Use date pickers for start and end time ?
 
-const CreateEvent = ({ setFields, fields, onSubmit, onClose, formAction }) => (
+const EventForm = ({ setFields, fields, onSubmit, onClose, formAction }) => (
   <form onSubmit={onSubmit}>
     <h4>
       {formAction === FORM_ACTION_CREATE ? "Create event" : "Update event"}
@@ -52,4 +52,4 @@ const CreateEvent = ({ setFields, fields, onSubmit, onClose, formAction }) => (
   </form>
 );
 
-export default CreateEvent;
+export default EventForm;
