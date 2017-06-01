@@ -11,11 +11,11 @@ const EventList = ({ list, auth, updateEvent }) => (
           ? <button onClick={() => updateEvent(item)}>Edit</button>
           : null}
 
-        <br /><span>Owner:{item.owner}</span>
-        <span>Desc:{item.desc}</span><br />
-        <span>Start:{item.start_time}</span><br />
-        <span>End: {item.end_time}</span><br />
-        <span>Location: {item.lat} - {item.lng}</span><br />
+        <br /><span>Owner: {item.owner}</span>
+        <br /><span>Desc: {item.desc}</span>
+        <br /><span>Start: {item.start_time}</span>
+        <br /><span>End: {item.end_time}</span>
+        <br /><span>Location: {item.lat} - {item.lng}</span>
       </div>
     ))}
   </div>
