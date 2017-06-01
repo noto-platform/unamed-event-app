@@ -11,23 +11,26 @@ import {
 
 import { selectAuth } from "store/auth/selectors";
 
+const formFields = {
+  title: "",
+  desc: "",
+  max_attendees: "",
+  start_time: "",
+  end_time: ""
+};
+
 export const withCreateEvent = compose(
   getContext({ firebase: PropTypes.object }),
   connect(selectAuth),
-  withState("fields", "setField", {}), // TODO Set init keys ?
-  mapProps(({ setField, fields, ...props }) => ({
-    setField: (field, element) =>
-      setField({ ...fields, [field]: element.target.value }),
-    handleCreateEvent: e => {
-      e.preventDefault(); // TODO remove form tag ?
-
+  withState("fields", "setField", formFields),
+  withHandlers({
+    onSubmit: props => event => {
       // Do some validation here maybe and so on ? ...
-      const { auth } = props;
+      event.preventDefault(); // TODO remove form tag ?
+      const { auth, fields } = props;
       console.log("createEvent", { ...fields, owner: auth.uid });
-    },
-    ...props
-  })),
-  withHandlers({}),
+    }
+  }),
   lifecycle({
     componentDidUpdate() {}
   })

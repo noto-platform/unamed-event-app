@@ -3,15 +3,16 @@ import React from "react";
 // TODO
 // Use date pickers for start and end time ?
 
-const CreateEvent = ({ setField, handleCreateEvent, auth }) => (
-  <form onSubmit={handleCreateEvent}>
+const CreateEvent = ({ setField, fields, onSubmit, auth, ...props }) => (
+  <form onSubmit={onSubmit}>
     <h4>Create event</h4>
     <i>Debug Owner: {auth.uid}</i>
     <p>
       <input
         type="text"
         placeholder="Title"
-        onChange={e => setField("title", e)}
+        value={fields.title}
+        onChange={e => setField({ ...fields, title: e.target.value })}
       />
     </p>
     <p>
@@ -19,26 +20,30 @@ const CreateEvent = ({ setField, handleCreateEvent, auth }) => (
         type="text"
         placeholder="Description"
         rows="5"
-        onChange={e => setField("desc", e)}
+        value={fields.desc}
+        onChange={e => setField({ ...fields, desc: e.target.value })}
       />
     </p>
     <p>
       <input
         type="number"
         placeholder="Max attendees"
-        onChange={e => setField("max_attendees", e)}
+        value={fields.max_attendees}
+        onChange={e => setField({ ...fields, max_attendees: e.target.value })}
       />
     </p>
     <p>
       <input
         type="number"
         placeholder="Star time"
-        onChange={e => setField("start_time", e)}
+        value={fields.start_time}
+        onChange={e => setField({ ...fields, start_time: e.target.value })}
       />
       <input
         type="number"
         placeholder="End time"
-        onChange={e => setField("end_time", e)}
+        value={fields.end_time}
+        onChange={e => setField({ ...fields, end_time: e.target.value })}
       />
     </p>
     <p>
