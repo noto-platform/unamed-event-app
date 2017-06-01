@@ -10,31 +10,30 @@ import {
 } from "recompose";
 
 import { selectAuth } from "store/auth/selectors";
-
-const formFields = {
-  title: "",
-  desc: "",
-  max_attendees: "",
-  start_time: "",
-  end_time: ""
-};
+import { setInitialFormState } from "store/events/selectors";
 
 export const withCreateEvent = compose(
   getContext({ firebase: PropTypes.object }),
   connect(selectAuth),
-  withState("fields", "setField", formFields),
+  withState("fields", "setFields", setInitialFormState),
   withHandlers({
     onSubmit: props => event => {
+      event.preventDefault();
       // Do some validation here maybe and so on ? ...
-      event.preventDefault(); // TODO remove form tag ?
       const { auth, fields } = props;
-      console.log("createEvent", { ...fields, owner: auth.uid });
+      console.log("Event", { ...fields, owner: auth.uid });
     }
   }),
   lifecycle({
-    componentDidUpdate() {}
+    componentDidMount() {
+      const { updateEvent, setFields } = this.props;
+      updateEvent ? setFields(updateEvent) : null;
+    }
   })
 );
 
-// Update and delete in same file?
-// export default withCreateEvent;
+export const withEventActionState = compose(
+  connect(selectAuth),
+  withState("createEventVisible", "setCreateEventVisibility", false),
+  withState("editEvent", "setEditEvent", null)
+);
