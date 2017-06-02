@@ -15,7 +15,7 @@ const myLocation = state => ({ coords: state.locations.me });
 const withNearbySearch = compose(
   connect(myLocation, { locateSuccess, locateFailure }),
   getContext({ firebase: PropTypes.object }),
-  onlyUpdateForKeys(["coords"]),
+  // onlyUpdateForKeys(["coords"]),
   mapProps(props => ({
     ...props,
     geoquery: props.firebase.geo.query({
@@ -41,6 +41,8 @@ const withNearbySearch = compose(
       });
     },
     componentWillReceiveProps({ coords, geoquery }) {
+      console.log(this.props);
+      console.log("\n\n");
       geoquery.updateCriteria({
         center: coords,
         radius: 30

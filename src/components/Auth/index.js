@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "proptypes";
 import FacebookLogin from "react-facebook-login";
 
-const Auth = ({ auth, onLogin, onFacebookConnect }) => (
+const Auth = ({ auth, onLogin, onFacebookConnect }) => null;
+/*
   <div>
     {auth.providerData &&
       !auth.providerData[0] &&
@@ -18,5 +19,5 @@ const Auth = ({ auth, onLogin, onFacebookConnect }) => (
       : <button onClick={onLogin}>Login</button>}
   </div>
 );
-
+*/
 export default Auth;
