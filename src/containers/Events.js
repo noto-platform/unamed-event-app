@@ -17,6 +17,8 @@ export const withCreateEvent = compose(
   connect(selectAuth),
   withState("fields", "setFields", setInitialFormState),
   withHandlers({
+    onInput: ({ fields, setFields }) => ({ target }) =>
+      setFields({ ...fields, [target.name]: target.value }),
     onSubmit: props => event => {
       event.preventDefault();
       // Do some validation here maybe and so on ? ...

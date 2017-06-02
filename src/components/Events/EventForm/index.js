@@ -7,7 +7,7 @@ import {
 // TODO
 // Use date pickers for start and end time ?
 
-const EventForm = ({ setFields, fields, onSubmit, onClose, formAction }) => (
+const EventForm = ({ fields, onSubmit, onClose, formAction, onInput }) => (
   <form onSubmit={onSubmit}>
     <h4>
       {formAction === FORM_ACTION_CREATE ? "Create event" : "Update event"}
@@ -15,32 +15,36 @@ const EventForm = ({ setFields, fields, onSubmit, onClose, formAction }) => (
     <p>
       <input
         type="text"
+        name="title"
         placeholder="Title"
         value={fields.title}
-        onChange={e => setFields({ ...fields, title: e.target.value })}
+        onChange={onInput}
       />
     </p>
     <p>
       <textarea
         type="text"
+        name="desc"
         placeholder="Description"
         rows="5"
         value={fields.desc}
-        onChange={e => setFields({ ...fields, desc: e.target.value })}
+        onChange={onInput}
       />
     </p>
     <p>
       <input
         type="number"
+        name="start_time"
         placeholder="Start time"
         value={fields.start_time}
-        onChange={e => setFields({ ...fields, start_time: e.target.value })}
+        onChange={onInput}
       />
       <input
         type="number"
+        name="end_time"
         placeholder="End time"
         value={fields.end_time}
-        onChange={e => setFields({ ...fields, end_time: e.target.value })}
+        onChange={onInput}
       />
     </p>
     <p>

@@ -5,17 +5,17 @@ const EventList = ({ list, auth, updateEvent }) => (
   <div>
     {list.map((item, id) => (
       <div key={`event_${id}`} style={{ border: "1px solid #eee" }}>
-        <span><b>{item.title}</b></span>
+        <div><b>{item.title}</b></div>
 
         {isEventOwner(item.owner, auth)
           ? <button onClick={() => updateEvent(item)}>Edit</button>
           : null}
 
-        <br /><span>Owner: {item.owner}</span>
-        <br /><span>Desc: {item.desc}</span>
-        <br /><span>Start: {item.start_time}</span>
-        <br /><span>End: {item.end_time}</span>
-        <br /><span>Location: {item.lat} - {item.lng}</span>
+        <div>Owner: {item.owner}</div>
+        <div>Desc: {item.desc}</div>
+        <div>Start: {item.start_time}</div>
+        <div>End: {item.end_time}</div>
+        <div>Location: {item.lat} - {item.lng}</div>
       </div>
     ))}
   </div>
