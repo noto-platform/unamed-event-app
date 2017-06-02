@@ -9,13 +9,13 @@ import {
   withHandlers
 } from "recompose";
 
-import { updateEntities } from "store/actions";
+import { updateEntities, updateFailure } from "store/actions";
 import { getListOfType } from "store/entities/selectors";
 
 const withEntities = entityType =>
   compose(
     getContext({ firebase: PropTypes.object }),
-    connect(getListOfType(entityType), { updateEntities }),
+    connect(getListOfType(entityType), { updateEntities, updateFailure }),
     withHandlers({
       update: ({ updateEntities }) => snap =>
         updateEntities(entityType, snap.val())
@@ -27,11 +27,11 @@ const withEntities = entityType =>
     lifecycle({
       componentWillMount() {
         const { dbRef, update } = this.props;
-        dbRef.on("value", update);
+        dbRef.on("value", update, updateFailure);
       },
       componentWillUnmount() {
         const { dbRef, update } = this.props;
-        dbRef.off("value", update);
+        dbRef.off("value", update, updateFailure);
       }
     })
   );

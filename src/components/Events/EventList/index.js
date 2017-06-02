@@ -3,7 +3,7 @@ import { isEventOwner } from "store/events/selectors";
 
 const EventList = ({ list, auth, updateEvent }) => (
   <div>
-    {list.map((item, id) => {
+    {Object.keys(list).map(key => list[key]).map((item, id) => {
       const onUpdate = () => updateEvent(item);
 
       return (

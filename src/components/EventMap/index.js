@@ -11,7 +11,7 @@ const EventMap = ({ center, markers }) => (
     center={center}
     zoom={[14]}
     containerStyle={{
-      height: "100vh",
+      height: "80vh",
       width: "100vw"
     }}
   >

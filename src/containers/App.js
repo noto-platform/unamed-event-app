@@ -2,16 +2,26 @@ import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import withEntities from "./Entities";
-
-import Auth from "./Auth";
-import GeoLocation from "./GeoLocation";
+import AuthView from "components/Auth";
 import EventsView from "components/Events";
-import Firebase from "./Firebase";
+import EventCreator from "components/EventCreator";
 
+import GeoLocation from "containers/GeoLocation";
+import Firebase from "containers/Firebase";
+
+import withAuth from "containers/Auth";
+import withEntities from "containers/Entities";
+import withEventCRUD from "containers/Events";
+import withNearbySearch from "containers/NearbySearch";
+
+const Auth = withAuth(AuthView);
 const Events = withEntities("events")(EventsView);
+// const EventCRUD = withEventCRUD(EventCreator);
+// const NearbyEvents = withNearbySearch(Events);
 
 const Home = () => <div>Home testing</div>;
+// <NearbyEvents />
+// <EventCRUD />
 
 const App = ({ store, firebase, geolocation }) => (
   <Provider store={store}>

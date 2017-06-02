@@ -1,13 +1,11 @@
 import firebase from "firebase";
+import GeoFire from "geofire";
 import { firebaseConfig } from "config";
-
-import { events } from "store/initialState";
 
 firebase.initializeApp(firebaseConfig);
 
-// Create events
-// events.map(e => {
-//   console.log(e)
-//   firebase.database().ref().child('events').push(e);
-// })
+const geofire = new GeoFire(firebase.database().ref("locations"));
+
+firebase.geo = geofire;
+
 export default firebase;
