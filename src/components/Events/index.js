@@ -13,26 +13,22 @@ const Events = ({
   list,
   auth,
   createEventVisible,
-  setCreateEventVisibility,
+  toggleCreateEvent,
   editEvent,
   setEditEvent
 }) => (
   <div>
-    <EventList
-      list={list}
-      auth={auth}
-      updateEvent={item => setEditEvent(item)}
-    />
+    <EventList list={list} auth={auth} updateEvent={setEditEvent} />
 
     <FloatingActionButton
-      onClick={() => setCreateEventVisibility(!createEventVisible)}
+      onClick={toggleCreateEvent}
       text={`${createEventVisible ? "Cancel" : "New event"}`}
     />
 
     {createEventVisible
       ? <CreateEvent
           formAction={FORM_ACTION_CREATE}
-          onClose={() => setCreateEventVisibility(false)}
+          onClose={toggleCreateEvent}
         />
       : null}
 
@@ -40,7 +36,7 @@ const Events = ({
       ? <UpdateEvent
           formAction={FORM_ACTION_UPDATE}
           updateEvent={editEvent}
-          onClose={() => setEditEvent(null)}
+          onClose={setEditEvent}
         />
       : null}
   </div>

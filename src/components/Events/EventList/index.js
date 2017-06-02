@@ -3,21 +3,25 @@ import { isEventOwner } from "store/events/selectors";
 
 const EventList = ({ list, auth, updateEvent }) => (
   <div>
-    {list.map((item, id) => (
-      <div key={`event_${id}`} style={{ border: "1px solid #eee" }}>
-        <div><b>{item.title}</b></div>
+    {list.map((item, id) => {
+      const onUpdate = () => updateEvent(item);
 
-        {isEventOwner(item.owner, auth)
-          ? <button onClick={() => updateEvent(item)}>Edit</button>
-          : null}
+      return (
+        <div key={`event_${id}`} style={{ border: "1px solid #eee" }}>
+          <div><b>{item.title}</b></div>
 
-        <div>Owner: {item.owner}</div>
-        <div>Desc: {item.desc}</div>
-        <div>Start: {item.start_time}</div>
-        <div>End: {item.end_time}</div>
-        <div>Location: {item.lat} - {item.lng}</div>
-      </div>
-    ))}
+          {isEventOwner(item.owner, auth)
+            ? <button onClick={onUpdate}>Edit</button>
+            : null}
+
+          <div>Owner: {item.owner}</div>
+          <div>Desc: {item.desc}</div>
+          <div>Start: {item.start_time}</div>
+          <div>End: {item.end_time}</div>
+          <div>Location: {item.lat} - {item.lng}</div>
+        </div>
+      );
+    })}
   </div>
 );
 

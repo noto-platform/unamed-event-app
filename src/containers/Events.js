@@ -37,5 +37,11 @@ export const withCreateEvent = compose(
 export const withEventActionState = compose(
   connect(selectAuth),
   withState("createEventVisible", "setCreateEventVisibility", false),
-  withState("editEvent", "setEditEvent", null)
+  withState("editEvent", "setEditEvent", null),
+  withHandlers({
+    toggleCreateEvent: ({
+      createEventVisible,
+      setCreateEventVisibility
+    }) => () => setCreateEventVisibility(!createEventVisible)
+  })
 );
