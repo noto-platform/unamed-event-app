@@ -11,7 +11,7 @@ import {
 import { withRouter } from "react-router";
 
 import AuthView from "components/Auth";
-import EventsView from "components/Events";
+import EventsView from "components/Events/EventList";
 import EventCreator from "components/EventCreator";
 import EventMap from "components/EventMap";
 
@@ -20,12 +20,9 @@ import Firebase from "containers/Firebase";
 
 import auth from "containers/Auth";
 import entities from "containers/Entities";
-import eventCRUD from "containers/Events";
+import eventCRUD from "containers/EventCrud";
 import nearbySearch from "containers/NearbySearch";
 import mapInteractions from "containers/MapInteractions";
-
-// const EventCRUD = eventCRUD(EventCreator);
-// const NearbyEvents = nearbySearch(EventMap);
 
 const Auth = auth(AuthView);
 const EventList = entities("events")(EventsView);
@@ -48,7 +45,6 @@ const App = ({ store, firebase, geolocation }) => (
       </Router>
 
       <EventList />
-
       <Auth />
 
     </Firebase>

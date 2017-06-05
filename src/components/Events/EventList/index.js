@@ -1,10 +1,11 @@
 import React, { PropTypes } from "react";
 import { isEventOwner } from "store/events/selectors";
 
-const EventList = ({ events, auth, updateEvent }) => (
+const EventList = ({ events, auth, updateEvent, deleteEvent }) => (
   <div>
     {Object.keys(events).map(key => events[key]).map((item, id) => {
       const onUpdate = () => updateEvent(item);
+      const onDelete = () => deleteEvent(item);
 
       return (
         <div key={`event_${id}`} style={{ border: "1px solid #eee" }}>
@@ -12,6 +13,10 @@ const EventList = ({ events, auth, updateEvent }) => (
 
           {isEventOwner(item.owner, auth)
             ? <button onClick={onUpdate}>Edit</button>
+            : null}
+
+          {isEventOwner(item.owner, auth)
+            ? <button onClick={onDelete}>Delete</button>
             : null}
 
           <div>Owner: {item.owner}</div>
