@@ -12,7 +12,7 @@ import Firebase from "containers/Firebase";
 
 import withAuth from "containers/Auth";
 import withEntities from "containers/Entities";
-import withEventCRUD from "containers/Events";
+// import withEventCRUD from "containers/Events";
 import withNearbySearch from "containers/NearbySearch";
 
 // const EventCRUD = withEventCRUD(EventCreator);
@@ -22,7 +22,7 @@ const Auth = withAuth(AuthView);
 const EventList = withEntities("events")(EventsView);
 const NearbyEvents = withEntities("locations")(withNearbySearch(EventMap));
 
-const App = ({ store, firebase, geolocation }) => (
+const App = ({ store, firebase, geolocation }) =>
   <Provider store={store}>
     <Firebase firebase={firebase}>
       <GeoLocation geolocation={geolocation} />
@@ -32,7 +32,6 @@ const App = ({ store, firebase, geolocation }) => (
       <Auth />
 
     </Firebase>
-  </Provider>
-);
+  </Provider>;
 
 export default App;
