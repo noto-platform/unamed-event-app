@@ -1,9 +1,9 @@
 import React, { PropTypes } from "react";
 import { isEventOwner } from "store/events/selectors";
 
-const EventList = ({ list, auth, updateEvent }) => (
+const EventList = ({ events, auth, updateEvent }) => (
   <div>
-    {Object.keys(list).map(key => list[key]).map((item, id) => {
+    {Object.keys(events).map(key => events[key]).map((item, id) => {
       const onUpdate = () => updateEvent(item);
 
       return (

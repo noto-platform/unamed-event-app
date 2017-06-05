@@ -1,13 +1,21 @@
 import React from "react";
 import { storiesOf } from "@kadira/storybook";
-import EventMap from ".";
 
+import { Provider } from "react-redux";
+import configureStore from "store/configure";
+
+import EventMap from ".";
+import state from "store/initialState";
+
+const store = configureStore(state, {
+  firebase: {}
+});
+
+console.log(state);
 const props = {
-  center: [11.9656, 57.6959],
-  markers: [
-    {
-      coords: [11.9656123, 57.6959123]
-    }
-  ]
+  center: state.locations.me,
+  markers: state.entities.locations
 };
-storiesOf("EventMap", module).add("default", () => <EventMap {...props} />);
+storiesOf("EventMap", module).add("default", () => (
+  <Provider store={store}><EventMap {...props} /></Provider>
+));

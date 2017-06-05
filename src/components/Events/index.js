@@ -10,7 +10,7 @@ const CreateEvent = withCreateEvent(EventForm);
 const UpdateEvent = withCreateEvent(EventForm);
 
 const Events = ({
-  list,
+  events,
   auth,
   createEventVisible,
   toggleCreateEvent,
@@ -18,12 +18,7 @@ const Events = ({
   setEditEvent
 }) => (
   <div>
-    <EventList list={list} auth={auth} updateEvent={setEditEvent} />
-
-    <FloatingActionButton
-      onClick={toggleCreateEvent}
-      text={`${createEventVisible ? "Cancel" : "New event"}`}
-    />
+    <EventList events={events} auth={auth} updateEvent={setEditEvent} />
 
     {createEventVisible
       ? <CreateEvent

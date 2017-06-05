@@ -12,7 +12,10 @@ import {
 import { updateEntities, updateFailure } from "store/actions";
 import { getListOfType } from "store/entities/selectors";
 
-const withEntities = entityType =>
+export const mapEntityById = entityType =>
+  connect((state, { id }) => (state.entities[entityType] || {})[id] || {});
+
+const entities = entityType =>
   compose(
     getContext({ firebase: PropTypes.object }),
     connect(getListOfType(entityType), { updateEntities, updateFailure }),
@@ -36,4 +39,4 @@ const withEntities = entityType =>
     })
   );
 
-export default withEntities;
+export default entities;

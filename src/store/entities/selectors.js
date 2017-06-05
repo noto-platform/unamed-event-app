@@ -9,6 +9,6 @@ export const getListOfType = type =>
   createSelector(
     state => state.entities,
     entities => ({
-      list: entities[type] || {}
+      [type]: entities[type] || {}
     })
   );

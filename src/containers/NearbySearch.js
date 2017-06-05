@@ -9,23 +9,22 @@ import {
 } from "recompose";
 
 import { locateSuccess, locateFailure } from "store/actions";
-
-const myLocation = state => ({ coords: state.locations.me });
+import { selectMap } from "store/map/selectors";
 
 const withNearbySearch = compose(
-  connect(myLocation, { locateSuccess, locateFailure }),
+  connect(selectMap, { locateSuccess, locateFailure }),
   getContext({ firebase: PropTypes.object }),
   // onlyUpdateForKeys(["coords"]),
   mapProps(props => ({
     ...props,
     geoquery: props.firebase.geo.query({
-      center: props.coords,
+      center: props.center,
       radius: 30
     })
   })),
   lifecycle({
     componentDidMount() {
-      const { coords, firebase, geoquery } = this.props;
+      const { center, firebase, geoquery } = this.props;
 
       // TODO:
       // Why doesn't it find any entries?
@@ -40,11 +39,11 @@ const withNearbySearch = compose(
         console.log(key, loc, distance);
       });
     },
-    componentWillReceiveProps({ coords, geoquery }) {
+    componentWillReceiveProps({ center, geoquery }) {
       console.log(this.props);
       console.log("\n\n");
       geoquery.updateCriteria({
-        center: coords,
+        center,
         radius: 30
       });
     },

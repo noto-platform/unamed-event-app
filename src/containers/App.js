@@ -1,6 +1,14 @@
 import React from "react";
+import { compose } from "recompose";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { withRouter } from "react-router";
 
 import AuthView from "components/Auth";
 import EventsView from "components/Events";
@@ -10,23 +18,35 @@ import EventMap from "components/EventMap";
 import GeoLocation from "containers/GeoLocation";
 import Firebase from "containers/Firebase";
 
-import withAuth from "containers/Auth";
-import withEntities from "containers/Entities";
-import withEventCRUD from "containers/Events";
-import withNearbySearch from "containers/NearbySearch";
+import auth from "containers/Auth";
+import entities from "containers/Entities";
+import eventCRUD from "containers/Events";
+import nearbySearch from "containers/NearbySearch";
+import mapInteractions from "containers/MapInteractions";
 
-// const EventCRUD = withEventCRUD(EventCreator);
-// const NearbyEvents = withNearbySearch(EventMap);
+// const EventCRUD = eventCRUD(EventCreator);
+// const NearbyEvents = nearbySearch(EventMap);
 
-const Auth = withAuth(AuthView);
-const EventList = withEntities("events")(EventsView);
-const NearbyEvents = withEntities("locations")(withNearbySearch(EventMap));
+const Auth = auth(AuthView);
+const EventList = entities("events")(EventsView);
+const NearbyEvents = compose(
+  mapInteractions,
+  entities("locations"),
+  nearbySearch
+)(EventMap);
 
 const App = ({ store, firebase, geolocation }) => (
   <Provider store={store}>
     <Firebase firebase={firebase}>
       <GeoLocation geolocation={geolocation} />
-      <NearbyEvents />
+
+      <Router>
+        <Switch>
+          <Route path="/:resource/:id" component={NearbyEvents} />
+          <Redirect to="/events/_" />
+        </Switch>
+      </Router>
+
       <EventList />
 
       <Auth />
