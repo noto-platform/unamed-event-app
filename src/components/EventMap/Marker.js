@@ -54,10 +54,10 @@ const MapMarker = ({
                 </div>
               : <div>
                   <Link to={`/events/${id}`}>view</Link>
-                  <Link to={`/events/${id}`}>attend</Link>
+                  <Link to={`/events/${id}/attend`}>attend</Link>
 
                   {/* TODO add update button in detail view and check if owner */}
-                  <Link to={`/events/${id}/update`}>edit</Link>
+                  <Link to={`/events/${id}/edit`}>edit</Link>
                 </div>}
           </div>}
       </div>

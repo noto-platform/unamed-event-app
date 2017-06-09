@@ -40,8 +40,6 @@ const withNearbySearch = compose(
       });
     },
     componentWillReceiveProps({ center, geoquery }) {
-      console.log(this.props);
-      console.log("\n\n");
       geoquery.updateCriteria({
         center,
         radius: 30

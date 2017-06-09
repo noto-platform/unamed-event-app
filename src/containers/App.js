@@ -39,12 +39,12 @@ const App = ({ store, firebase, geolocation }) =>
 
       <Router>
         <Switch>
-          <Route path="/:resource/:id/:action" component={NearbyEvents} />
-          <Route path="/:resource/:id" component={NearbyEvents} />
-          <Redirect to="/events/_" />
+          <Route path="/events/:id?/:action?" component={NearbyEvents} />
+          <Redirect to="/events" />
         </Switch>
       </Router>
 
+      {/* What to do with these? Currently just responsible for data fetch? */}
       <EventList />
       <Auth />
 

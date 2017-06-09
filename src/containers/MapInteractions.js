@@ -24,7 +24,15 @@ export const mapInteractions = compose(
     setMapZoom
   }),
   withRouter,
-  // TODO: find a cleaner, more robust solution than componentWillReceiveProps
+  /*
+  TODO: find a cleaner, more robust solution than componentWillReceiveProps
+
+  Maybe dispatch actions like this and delegate to redux?
+  dispatch(navAction({
+    action: match.params.action || "view",
+    id: "id"
+  }))
+  */
   onlyUpdateForKeys(["match", "event"]),
   mapProps(props => ({
     ...props,
@@ -43,10 +51,12 @@ export const mapInteractions = compose(
         match.params.resource === "events"
         // match.params.id !== this.props.match.params.id
       ) {
-        console.log("setcenter");
         setMapCenter(event.l);
         setMapZoom([14]);
       }
+
+      console.log("Do action: ", match.params.action);
+      console.log("with id: ", match.params.id);
     }
   }),
   withHandlers({
