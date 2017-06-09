@@ -20,9 +20,10 @@ import Firebase from "containers/Firebase";
 
 import auth from "containers/Auth";
 import entities from "containers/Entities";
-import eventCRUD from "containers/EventCrud";
 import nearbySearch from "containers/NearbySearch";
 import mapInteractions from "containers/MapInteractions";
+
+import crud from "containers/CRUD";
 
 const Auth = auth(AuthView);
 const EventList = entities("events")(EventsView);
