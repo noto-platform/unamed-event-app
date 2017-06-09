@@ -31,12 +31,9 @@ const EventMap = ({
   event,
   zoom,
   locations = [],
-  onDragStart,
   onMoveMap,
-  onZoom,
-  createNewEvent,
-  match,
-  location
+  onCreateNewEvent,
+  match
 }) => {
   return (
     <div>
@@ -46,11 +43,9 @@ const EventMap = ({
         center={event ? event.l : center}
         zoom={zoom}
         movingMethod="easeTo"
-        onDragStart={onDragStart}
         onMoveEnd={onMoveMap}
-        onZoom={onZoom}
         containerStyle={{
-          height: "80vh",
+          height: "100vh",
           width: "100vw"
         }}
       >
@@ -68,7 +63,7 @@ const EventMap = ({
         )}
       </ReactMapboxGl>
       <Crosshair />
-      <Button text="+" onClick={createNewEvent} />
+      <Button text="+" onClick={onCreateNewEvent} />
 
       {/* TODO Where should we put this ? */}
       {match.params.action === "create" ? <CreateEvent /> : null}

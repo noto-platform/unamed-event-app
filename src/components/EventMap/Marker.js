@@ -27,22 +27,38 @@ const Marker = styled(MapboxMarker)`
 
 const emojies = "🎭😂🍻🏞👾🤖".split("");
 
-const MapMarker = ({ id, start_time, title, coords, expanded, onClick }) => {
+const MapMarker = ({
+  id,
+  start_time,
+  title,
+  owner,
+  coords,
+  expanded,
+  onClick
+}) => {
   return (
     <Marker expanded={expanded} coordinates={coords}>
       <div>
         <div onClick={onClick}>
-          {"🤖"} {expanded && <small><a href="#">@owner</a></small>}
+          <strong>{expanded ? title : "👾"}</strong>
+          {expanded && <small><a href="#">{owner}</a></small>}
         </div>
         {expanded &&
           <div>
             <div><small>16:00 | 157 / 200</small></div>
             <div>{title}</div>
-            <Link to={`/events/${id}`}>view</Link>
-            <Link to={`/events/${id}`}>attend</Link>
 
-            {/* TODO add update button in detail view and check if owner */}
-            <Link to={`/events/${id}/update`}>edit</Link>
+            {id === "new"
+              ? <div>
+                  <button>Save</button>
+                </div>
+              : <div>
+                  <Link to={`/events/${id}`}>view</Link>
+                  <Link to={`/events/${id}`}>attend</Link>
+
+                  {/* TODO add update button in detail view and check if owner */}
+                  <Link to={`/events/${id}/update`}>edit</Link>
+                </div>}
           </div>}
       </div>
     </Marker>

@@ -7,7 +7,7 @@ const Button = styled.div`
   z-index: 10;
   width: 60px;
   height: 60px;
-  bottom: calc(20vh + 60px);
+  bottom: 60px;
   right: 60px;
   color: ${color.gray[9]};
   font-size: 24px;
@@ -19,8 +19,7 @@ const Button = styled.div`
   align-items: center;
 `;
 
-const FloatingActionButton = ({ text, onClick }) => (
-  <Button onClick={onClick}>{text}</Button>
-);
+const FloatingActionButton = ({ text, onClick }) =>
+  <Button onClick={onClick}>{text}</Button>;
 
 export default FloatingActionButton;

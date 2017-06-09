@@ -11,13 +11,20 @@ import {
   withProps
 } from "recompose";
 import { withRouter } from "react-router";
-import { viewEvent } from "store/events/actions";
+import { newEvent } from "store/events/actions";
 import { setMapCenter, setMapZoom } from "store/map/actions";
 import { selectMap, selectMarker } from "store/map/selectors";
 
 export const mapInteractions = compose(
-  connect(selectMap, { setMapCenter, setMapZoom, viewEvent }),
+  connect(selectMap, {
+    // Event-creation actions should go somewhere else
+    onCreateNewEvent: newEvent,
+
+    setMapCenter,
+    setMapZoom
+  }),
   withRouter,
+  // TODO: find a cleaner, more robust solution than componentWillReceiveProps
   onlyUpdateForKeys(["match", "event"]),
   mapProps(props => ({
     ...props,
@@ -31,7 +38,6 @@ export const mapInteractions = compose(
       setMapCenter,
       setMapZoom
     }) {
-      console.log(event, center);
       if (
         event &&
         match.params.resource === "events"
@@ -45,15 +51,7 @@ export const mapInteractions = compose(
   }),
   withHandlers({
     onDragStart: ({ history }) => map => console.log("Hej"),
-    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter()),
-    onZoom: ({ event, center, setMapCenter }) => map => {
-      // Crashes for me, l is undefined....
-      // console.log(event.l, center);
-    },
-    createNewEvent: ({ history, match }) => () =>
-      match.params.action !== "create"
-        ? history.replace("/events/_/create")
-        : history.replace("/events/_")
+    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter())
   })
 );
 
