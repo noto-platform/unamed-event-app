@@ -17,7 +17,7 @@ const geolocation = {
         longitude: 11.9656
       };
       setTimeout(() => onSuccess(mockLocation), 2000);
-      _watcherId = setInterval(() => onSuccess(mockLocation), 10000);
+      _watcherId = setInterval(() => onSuccess(mockLocation), 60000);
     }
   },
   clearWatch: () => {
