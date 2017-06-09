@@ -6,7 +6,7 @@ console.log(color);
 const Container = styled.div`
   position: absolute;
   pointer-events: none;
-  height: 80vh;
+  height: 100vh;
   width: 100%;
   top: 0;
   left: 0;
@@ -23,10 +23,9 @@ const Point = styled.div`
   border-radius: 50%;
 `;
 
-const Crosshair = () => (
+const Crosshair = () =>
   <Container>
     <Point />
-  </Container>
-);
+  </Container>;
 
 export default Crosshair;
