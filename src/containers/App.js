@@ -32,13 +32,14 @@ const NearbyEvents = compose(
   nearbySearch
 )(EventMap);
 
-const App = ({ store, firebase, geolocation }) => (
+const App = ({ store, firebase, geolocation }) =>
   <Provider store={store}>
     <Firebase firebase={firebase}>
       <GeoLocation geolocation={geolocation} />
 
       <Router>
         <Switch>
+          <Route path="/:resource/:id/:action" component={NearbyEvents} />
           <Route path="/:resource/:id" component={NearbyEvents} />
           <Redirect to="/events/_" />
         </Switch>
@@ -48,7 +49,6 @@ const App = ({ store, firebase, geolocation }) => (
       <Auth />
 
     </Firebase>
-  </Provider>
-);
+  </Provider>;
 
 export default App;

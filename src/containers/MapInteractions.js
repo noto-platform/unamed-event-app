@@ -44,11 +44,16 @@ export const mapInteractions = compose(
     }
   }),
   withHandlers({
-    onDragStart: ({ history }) => map => history.push("/events/_"),
+    onDragStart: ({ history }) => map => console.log("Hej"),
     onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter()),
     onZoom: ({ event, center, setMapCenter }) => map => {
-      console.log(event.l, center);
-    }
+      // Crashes for me, l is undefined....
+      // console.log(event.l, center);
+    },
+    createNewEvent: ({ history, match }) => () =>
+      match.params.action !== "create"
+        ? history.replace("/events/_/create")
+        : history.replace("/events/_")
   })
 );
 

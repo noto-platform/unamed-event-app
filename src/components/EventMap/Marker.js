@@ -40,6 +40,9 @@ const MapMarker = ({ id, start_time, title, coords, expanded, onClick }) => {
             <div>{title}</div>
             <Link to={`/events/${id}`}>view</Link>
             <Link to={`/events/${id}`}>attend</Link>
+
+            {/* TODO add update button in detail view and check if owner */}
+            <Link to={`/events/${id}/update`}>edit</Link>
           </div>}
       </div>
     </Marker>
