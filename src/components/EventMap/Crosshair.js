@@ -6,7 +6,7 @@ console.log(color);
 const Container = styled.div`
   position: absolute;
   pointer-events: none;
-  height: 100vh;
+  height: 50vh;
   width: 100%;
   top: 0;
   left: 0;

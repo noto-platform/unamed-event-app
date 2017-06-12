@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 
 // state [SELECTED, VIEWING]
 const Marker = styled(MapboxMarker)`
-  width: ${({ expanded }) => (expanded ? 143 : 20)}px;
-  height: ${({ expanded }) => (expanded ? 85 : 20)}px;
+  width: ${({ expanded }) => (expanded ? 200 : 30)}px;
+  height: ${({ expanded }) => (expanded ? 100 : 30)}px;
   background: ${color.gray[0]};
   border-radius: 3px;
   display: flex;
   padding: 0 3px;
+  font-size: 13px;
   flex-direction: column;
   transition:
     width 300ms cubic-bezier(0.165, 0.840, 0.440, 1.000),
@@ -33,6 +34,7 @@ const MapMarker = ({
   title,
   owner,
   coords,
+  tags,
   expanded,
   onClick
 }) => {
@@ -40,7 +42,7 @@ const MapMarker = ({
     <Marker expanded={expanded} coordinates={coords}>
       <div>
         <div onClick={onClick}>
-          <strong>{expanded ? title : "👾"}</strong>
+          <strong>{expanded ? title : tags[0]}</strong>
           {expanded && <small><a href="#">{owner}</a></small>}
         </div>
         {expanded &&

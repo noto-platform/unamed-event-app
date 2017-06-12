@@ -1,9 +1,21 @@
 {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
-  "dependencies": {
-    "firebase-admin": "^4.1.2",
-    "firebase-functions": "^0.5"
+  "scripts": {
+    "dev": "backpack dev",
+    "test": "jest"
   },
-  "private": true
+  "dependencies": {
+    "axios": "^0.16.2",
+    "backpack-core": "^0.3.0",
+    "firebase": "^4.1.2",
+    "firebase-admin": "^4.1.2",
+    "firebase-functions": "^0.5",
+    "geofire": "^4.1.2",
+    "jest-cli": "^20.0.4"
+  },
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
 }
