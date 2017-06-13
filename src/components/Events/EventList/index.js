@@ -1,4 +1,7 @@
+import { mapObjIndexed, values } from "ramda";
 import React, { PropTypes } from "react";
+import { Link } from "react-router-dom";
+
 import "../DraggableContainer/index.css";
 import { isEventOwner } from "store/events/selectors";
 import DraggableContainer from "../DraggableContainer";
@@ -15,20 +18,15 @@ const EventList = ({ events, auth, history }) => {
         </div>
 
         <div className="event__body event__body--scroll">
-          {Object.keys(events).map(key => events[key]).map((item, id) => {
-            // TODO we should center map somehow here!
-            const showEvent = id => history.replace(`events/${item.id}`);
-
-            return (
-              <div
-                className="event-list-item"
-                key={`event_${item.id}`}
-                onClick={showEvent}
-              >
-                <div><b>{item.title}</b></div>
-              </div>
-            );
-          })}
+          {values(
+            mapObjIndexed(
+              (item, id) =>
+                <Link className="event-list-item" key={id} to={`/events/${id}`}>
+                  <div><b>{item.title}</b></div>
+                </Link>,
+              events
+            )
+          )}
         </div>
       </DraggableContainer>
     </div>
