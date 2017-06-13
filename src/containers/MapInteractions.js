@@ -20,7 +20,7 @@ import { selectMap, selectMarker } from "store/map/selectors";
 export const mapInteractions = compose(
   connect(selectMap, {
     // Event-creation actions should go somewhere else
-    // onCreateNewEvent: newEvent,
+    onCreateNewEvent: newEvent,
     setMapCenter,
     setMapZoom
   }),
@@ -78,12 +78,12 @@ export const mapInteractions = compose(
   }),
   withHandlers({
     onDragStart: ({ history }) => map => console.log("Hej"),
-    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter()),
+    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter())
     // TODO Debugging create event toggle
-    onCreateNewEvent: ({ history, match }) => () =>
-      match.params.action !== "create"
-        ? history.replace("/events/_/create")
-        : history.replace("/events/_")
+    // onCreateNewEvent: ({ history, match }) => () =>
+    //   match.params.action !== "create"
+    //     ? history.replace("/events/_/create")
+    //     : history.replace("/events/_")
   })
 );
 

@@ -57,7 +57,7 @@ const EventMap = ({
             (marker, key) =>
               <EventMarker
                 coords={marker.l}
-                key={marker.g}
+                key={key}
                 id={key}
                 expanded={geo.distance(center, marker.l) < 0.1}
               />,

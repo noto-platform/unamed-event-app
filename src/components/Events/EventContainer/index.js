@@ -114,12 +114,15 @@ export const EventContainerUI = compose(
           return uiMove$.takeUntil(uiUp$);
         });
 
-      onDrag.subscribe(e =>
+      // TODO fix
+      const getClientTouch = e => (e.y ? e.y : e.changedTouches[0].clientY);
+
+      onDrag.subscribe(e => {
+        console.info(e);
         setPosition(
-          elementStartPosition +
-            (startUiDownPosition - (e.y || e.changedTouches[0].clientY))
-        )
-      );
+          elementStartPosition + (startUiDownPosition - getClientTouch(e))
+        );
+      });
     },
     componentWillUnmount() {
       removeSubscription(uiUpSubscription);
