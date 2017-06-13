@@ -71,8 +71,8 @@ export const mapInteractions = compose(
           return eventElement ? eventElement.style.bottom.replace("px", "") : 0;
         })
         .distinctUntilChanged()
-        .subscribe(DraggableContainerHeight =>
-          setMapHeight(Number(DraggableContainerHeight))
+        .subscribe(draggableContainerHeight =>
+          setMapHeight(Number(draggableContainerHeight))
         );
     }
   }),
@@ -86,7 +86,7 @@ export const markerInteractions = compose(
   withRouter,
   connect(selectMarker, { setMapCenter }),
   withHandlers({
-    onClick: ({ id, coords, history, setMapCenter }) => eventId => {
+    onClick: ({ id, coords, history, setMapCenter }) => () => {
       history.push(`/events/${id}`);
       setMapCenter(coords);
     }

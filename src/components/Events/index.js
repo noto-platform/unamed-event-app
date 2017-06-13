@@ -9,7 +9,6 @@ import EventMap from "components/EventMap";
 import entities, { mapEntityById } from "containers/Entities";
 import nearbySearch from "containers/NearbySearch";
 import mapInteractions from "containers/MapInteractions";
-import { eventDetails } from "containers/EventDetails";
 import EventsView from "components/Events/EventList";
 import EventDetailView from "components/Events/EventDetails";
 
