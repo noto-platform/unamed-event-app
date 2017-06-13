@@ -40,7 +40,6 @@ const EventMap = ({
     <div>
       <ReactMapboxGl
         style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
-        id="map"
         accessToken={mapboxAccessToken}
         center={event ? event.l : center}
         zoom={zoom}
@@ -74,7 +73,9 @@ const EventMap = ({
       />
 
       {/* TODO Where should we put this ? */}
-      {match.params.action === "create" ? <CreateEvent /> : null}
+      {match.params.action === "create"
+        ? <CreateEvent center={center} />
+        : null}
       {match.params.action === "update" ? <UpdateEvent /> : null}
     </div>
   );

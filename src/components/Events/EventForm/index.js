@@ -13,15 +13,16 @@ const EventForm = ({
   cancelForm,
   match,
   validForm,
-  me
+  me,
+  center
 }) => {
+  console.log(center);
   return (
     <EventContainer fullPageEnabled={false}>
       <div className="event__top-bar">
         <span className="title">New Event!</span>
         <div className="locations">
-          102
-          103
+          LNG {center[0]} / LAT {center[1]}
         </div>
       </div>
 
