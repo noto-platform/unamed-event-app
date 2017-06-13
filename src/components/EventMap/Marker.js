@@ -34,6 +34,7 @@ const MapMarker = ({
   title,
   owner,
   coords,
+  tags,
   expanded,
   onClick
 }) => {
@@ -41,7 +42,7 @@ const MapMarker = ({
     <Marker expanded={expanded} coordinates={coords}>
       <div>
         <div onClick={onClick}>
-          <strong>{expanded ? title : "👾"}</strong>
+          <strong>{expanded ? title : tags[0]}</strong>
           {expanded && <small><a href="#">{owner}</a></small>}
         </div>
         {expanded &&

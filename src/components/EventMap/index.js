@@ -45,7 +45,7 @@ const EventMap = ({
         movingMethod="easeTo"
         onMoveEnd={onMoveMap}
         containerStyle={{
-          height: "100vh",
+          height: "50vh",
           width: "100vw"
         }}
       >
@@ -54,7 +54,7 @@ const EventMap = ({
             (marker, key) =>
               <EventMarker
                 coords={marker.l}
-                key={marker.g}
+                key={key}
                 id={key}
                 expanded={geo.distance(center, marker.l) < 0.2}
               />,
