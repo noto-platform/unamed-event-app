@@ -87,7 +87,6 @@ export const markerInteractions = compose(
   connect(selectMarker, { setMapCenter }),
   withHandlers({
     onClick: ({ id, coords, history, setMapCenter }) => () => {
-      console.log("CLICKLICK");
       history.push(`/events/${id}`);
       setMapCenter(coords);
     }

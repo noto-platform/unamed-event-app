@@ -1,12 +1,5 @@
 import Rx from "rxjs/Rx";
-import {
-  compose,
-  lifecycle,
-  getContext,
-  withHandlers,
-  withState,
-  mapProps
-} from "recompose";
+import { compose, lifecycle, withState } from "recompose";
 
 const WRAPPER_ID = "wrapper";
 

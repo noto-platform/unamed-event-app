@@ -1,14 +1,8 @@
 import React, { PropTypes } from "react";
 import "./index.css";
-import styled from "styled-components";
 import DraggableInteractions from "containers/DraggableInteractions";
 
-const DraggableContainer = ({
-  fullPageEnabled,
-  positionBottom,
-  setPosition,
-  children
-}) => {
+const DraggableContainer = ({ positionBottom, setPosition, children }) => {
   const handleMobileKeyboard = () => setPosition(window.innerHeight / 4);
 
   return (
