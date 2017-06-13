@@ -33,20 +33,24 @@ const EventMap = ({
   locations = [],
   onMoveMap,
   onCreateNewEvent,
-  match
+  match,
+  mapHeight
 }) => {
   return (
     <div>
       <ReactMapboxGl
         style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
+        id="map"
         accessToken={mapboxAccessToken}
         center={event ? event.l : center}
         zoom={zoom}
         movingMethod="easeTo"
         onMoveEnd={onMoveMap}
         containerStyle={{
+          top: `-${mapHeight / 2}px`,
           height: "100vh",
-          width: "100vw"
+          width: "100vw",
+          transition: "top 0.1s ease"
         }}
       >
         {values(
@@ -62,8 +66,12 @@ const EventMap = ({
           )
         )}
       </ReactMapboxGl>
-      <Crosshair />
-      <Button text="+" onClick={onCreateNewEvent} />
+      <Crosshair position={mapHeight} />
+      <Button
+        text="+"
+        onClick={onCreateNewEvent}
+        positionBottom={mapHeight + 60}
+      />
 
       {/* TODO Where should we put this ? */}
       {match.params.action === "create" ? <CreateEvent /> : null}

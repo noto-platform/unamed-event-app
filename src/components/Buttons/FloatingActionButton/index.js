@@ -17,9 +17,12 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: bottom 0.1s ease;
 `;
 
-const FloatingActionButton = ({ text, onClick }) =>
-  <Button onClick={onClick}>{text}</Button>;
+const FloatingActionButton = ({ text, onClick, positionBottom }) =>
+  <Button onClick={onClick} style={{ bottom: `${positionBottom || 60}px` }}>
+    {text}
+  </Button>;
 
 export default FloatingActionButton;

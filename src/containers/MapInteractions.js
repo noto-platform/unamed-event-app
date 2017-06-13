@@ -1,6 +1,7 @@
 import { equals, not, merge, path } from "ramda";
 import PropTypes from "proptypes";
 import { connect } from "react-redux";
+import Rx from "rxjs/Rx";
 import {
   compose,
   lifecycle,
@@ -8,7 +9,8 @@ import {
   shouldUpdate,
   onlyUpdateForKeys,
   withHandlers,
-  withProps
+  withProps,
+  withState
 } from "recompose";
 import { withRouter } from "react-router";
 import { newEvent } from "store/events/actions";
@@ -18,8 +20,7 @@ import { selectMap, selectMarker } from "store/map/selectors";
 export const mapInteractions = compose(
   connect(selectMap, {
     // Event-creation actions should go somewhere else
-    onCreateNewEvent: newEvent,
-
+    // onCreateNewEvent: newEvent,
     setMapCenter,
     setMapZoom
   }),
@@ -34,6 +35,7 @@ export const mapInteractions = compose(
   }))
   */
   onlyUpdateForKeys(["match", "event"]),
+  withState("mapHeight", "setMapHeight", window.innerHeight),
   mapProps(props => ({
     ...props,
     center: props.event ? props.event.l : props.center
@@ -57,11 +59,31 @@ export const mapInteractions = compose(
 
       console.log("Do action: ", match.params.action);
       console.log("with id: ", match.params.id);
+    },
+    componentDidMount() {
+      const { setMapHeight } = this.props;
+
+      Rx.Observable
+        .of(0, Rx.Scheduler.animationFrame)
+        .repeat()
+        .map(() => {
+          const eventElement = document.getElementById("wrapper");
+          return eventElement ? eventElement.style.bottom.replace("px", "") : 0;
+        })
+        .distinctUntilChanged()
+        .subscribe(eventContainerHeight =>
+          setMapHeight(Number(eventContainerHeight))
+        );
     }
   }),
   withHandlers({
     onDragStart: ({ history }) => map => console.log("Hej"),
-    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter())
+    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter()),
+    // TODO Debugging create event toggle
+    onCreateNewEvent: ({ history, match }) => () =>
+      match.params.action !== "create"
+        ? history.replace("/events/_/create")
+        : history.replace("/events/_")
   })
 );
 

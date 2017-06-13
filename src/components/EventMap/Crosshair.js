@@ -13,6 +13,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: height 0.1s ease;
 `;
 
 const Point = styled.div`
@@ -23,8 +24,8 @@ const Point = styled.div`
   border-radius: 50%;
 `;
 
-const Crosshair = () =>
-  <Container>
+const Crosshair = ({ position }) =>
+  <Container style={{ height: `${window.innerHeight - position}px` }}>
     <Point />
   </Container>;
 
