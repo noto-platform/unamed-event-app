@@ -15,16 +15,14 @@ import { selectAuth } from "store/auth/selectors";
 import { pickProviderId } from "store/auth/reducer";
 import { getMyLocation } from "store/locations/selectors";
 import { setInitialFormState } from "store/events/selectors";
-import { isEventOwner } from "store/events/selectors";
+import { isEventOwner, getEventById } from "store/events/selectors";
 const t = require("tcomb-validation");
 
 export const eventDetails = compose(
   // entities("events"),
   mapProps(props => ({
     ...props,
-    theEvent: Object.keys(props.events)
-      .map(key => props.events[key])
-      .find(item => item.id === props.id)
+    theEvent: getEventById(props.events, props.id)
   }))
 );
 

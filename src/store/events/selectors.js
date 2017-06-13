@@ -11,3 +11,6 @@ export const setInitialFormState = {
 };
 
 export const isEventOwner = (owner, auth) => pickProviderId(auth) === owner;
+
+export const getEventById = (events, id) =>
+  Object.keys(events).map(key => events[key]).find(item => item.id === id);
