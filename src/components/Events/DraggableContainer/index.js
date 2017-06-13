@@ -45,7 +45,10 @@ const removeSubscription = subscription =>
 
 const getBottomPosition = ({ style }) => Number(style.bottom.replace("px", ""));
 
-const getYPosition = e => (e.y ? e.y : e.changedTouches[0].clientY);
+const getTouches = e =>
+  e.changedTouches ? e.changedTouches[0].clientY : window.innerHeight;
+
+const getYPosition = e => (e.y ? e.y : getTouches(e));
 
 function setClassName(el, className) {
   el.className = className;
