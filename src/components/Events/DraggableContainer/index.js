@@ -91,10 +91,10 @@ export const DraggableContainerUI = compose(
 
       const onDrag = uiDown$
         .filter(e => {
-          return e.target.localName !== "input";
+          return e.target.className === "event__top-bar";
         })
         .switchMap(e => {
-          // e.preventDefault();
+          e.preventDefault();
           removeAnimation(wrapperElement);
           startUiDownPosition = getYPosition(e);
           elementStartPosition = getBottomPosition(wrapperElement);

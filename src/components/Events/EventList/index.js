@@ -14,7 +14,7 @@ const EventList = ({ events, auth, history }) => {
           </span>
         </div>
 
-        <div className="event__body">
+        <div className="event__body event__body--scroll">
           {Object.keys(events).map(key => events[key]).map((item, id) => {
             // TODO we should center map somehow here!
             const showEvent = id => history.replace(`events/${item.id}`);

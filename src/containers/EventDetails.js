@@ -19,7 +19,6 @@ import { isEventOwner, getEventById } from "store/events/selectors";
 const t = require("tcomb-validation");
 
 export const eventDetails = compose(
-  // entities("events"),
   mapProps(props => ({
     ...props,
     theEvent: getEventById(props.events, props.id)
