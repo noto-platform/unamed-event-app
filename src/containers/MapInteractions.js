@@ -1,6 +1,7 @@
 import { equals, not, merge, path } from "ramda";
 import PropTypes from "proptypes";
 import { connect } from "react-redux";
+import Rx from "rxjs/Rx";
 import {
   compose,
   lifecycle,
@@ -8,7 +9,8 @@ import {
   shouldUpdate,
   onlyUpdateForKeys,
   withHandlers,
-  withProps
+  withProps,
+  withState
 } from "recompose";
 import { withRouter } from "react-router";
 import { newEvent } from "store/events/actions";
@@ -19,7 +21,6 @@ export const mapInteractions = compose(
   connect(selectMap, {
     // Event-creation actions should go somewhere else
     onCreateNewEvent: newEvent,
-
     setMapCenter,
     setMapZoom
   }),
@@ -34,6 +35,7 @@ export const mapInteractions = compose(
   }))
   */
   onlyUpdateForKeys(["match", "event"]),
+  withState("mapHeight", "setMapHeight", window.innerHeight),
   mapProps(props => ({
     ...props,
     center: props.event ? props.event.l : props.center
@@ -57,6 +59,21 @@ export const mapInteractions = compose(
 
       console.log("Do action: ", match.params.action);
       console.log("with id: ", match.params.id);
+    },
+    componentDidMount() {
+      const { setMapHeight } = this.props;
+
+      Rx.Observable
+        .of(0, Rx.Scheduler.animationFrame)
+        .repeat()
+        .map(() => {
+          const eventElement = document.getElementById("wrapper");
+          return eventElement ? eventElement.style.bottom.replace("px", "") : 0;
+        })
+        .distinctUntilChanged()
+        .subscribe(DraggableContainerHeight =>
+          setMapHeight(Number(DraggableContainerHeight))
+        );
     }
   }),
   withHandlers({
@@ -69,7 +86,7 @@ export const markerInteractions = compose(
   withRouter,
   connect(selectMarker, { setMapCenter }),
   withHandlers({
-    onClick: ({ id, coords, history, setMapCenter }) => () => {
+    onClick: ({ id, coords, history, setMapCenter }) => eventId => {
       history.push(`/events/${id}`);
       setMapCenter(coords);
     }
