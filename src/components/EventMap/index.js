@@ -12,11 +12,9 @@ import Marker from "./Marker";
 import Crosshair from "./Crosshair";
 import Button from "components/Buttons/FloatingActionButton";
 
-const EventMarker = compose(
-  markerInteractions,
-  withRouter,
-  mapEntityById("events")
-)(Marker);
+const EventMarker = compose(markerInteractions, mapEntityById("events"))(
+  Marker
+);
 
 const EventMap = ({
   firebase: { geo },
