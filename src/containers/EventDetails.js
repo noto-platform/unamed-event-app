@@ -20,17 +20,12 @@ const t = require("tcomb-validation");
 
 export const eventDetails = compose(
   // entities("events"),
-  mapProps(props => {
-    console.log("PROPPEEEE", props);
-
-    return {
-      ...props,
-      theEvent: Object.keys(props.events)
-        .map(key => props.events[key])
-        .find(item => item.id === props.id),
-      center: props.event ? props.event.l : props.center
-    };
-  })
+  mapProps(props => ({
+    ...props,
+    theEvent: Object.keys(props.events)
+      .map(key => props.events[key])
+      .find(item => item.id === props.id)
+  }))
 );
 
 /**

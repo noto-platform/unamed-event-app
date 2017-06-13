@@ -86,7 +86,7 @@ export const markerInteractions = compose(
   withRouter,
   connect(selectMarker, { setMapCenter }),
   withHandlers({
-    onClick: ({ id, coords, events, history, setMapCenter }) => eventId => {
+    onClick: ({ coords, history, setMapCenter }) => eventId => {
       history.push(`/events/${eventId}`);
       setMapCenter(coords);
     }
