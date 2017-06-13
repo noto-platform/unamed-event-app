@@ -20,7 +20,7 @@ const emojies = "🎭😂🍻🏞👾🤖".split("");
 const MapMarker = ({ coords, tags, onClick }) =>
   <Marker coordinates={coords}>
     <div onClick={onClick}>
-      {tags && tags[0]}
+      {(tags && tags[0]) || "New"}
     </div>
   </Marker>;
 

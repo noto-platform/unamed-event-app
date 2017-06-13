@@ -18,13 +18,6 @@ import { setInitialFormState } from "store/events/selectors";
 import { isEventOwner, getEventById } from "store/events/selectors";
 const t = require("tcomb-validation");
 
-export const eventDetails = compose(
-  mapProps(props => ({
-    ...props,
-    theEvent: getEventById(props.events, props.id)
-  }))
-);
-
 /**
  * TODO
  * Just uncommented the code below for now. Will be used in Create / Edit
