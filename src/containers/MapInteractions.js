@@ -71,19 +71,14 @@ export const mapInteractions = compose(
           return eventElement ? eventElement.style.bottom.replace("px", "") : 0;
         })
         .distinctUntilChanged()
-        .subscribe(eventContainerHeight =>
-          setMapHeight(Number(eventContainerHeight))
+        .subscribe(DraggableContainerHeight =>
+          setMapHeight(Number(DraggableContainerHeight))
         );
     }
   }),
   withHandlers({
     onDragStart: ({ history }) => map => console.log("Hej"),
     onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter())
-    // TODO Debugging create event toggle
-    // onCreateNewEvent: ({ history, match }) => () =>
-    //   match.params.action !== "create"
-    //     ? history.replace("/events/_/create")
-    //     : history.replace("/events/_")
   })
 );
 
@@ -91,8 +86,8 @@ export const markerInteractions = compose(
   withRouter,
   connect(selectMarker, { setMapCenter }),
   withHandlers({
-    onClick: ({ id, coords, history, setMapCenter }) => () => {
-      history.push(`/events/${id}`);
+    onClick: ({ id, coords, events, history, setMapCenter }) => eventId => {
+      history.push(`/events/${eventId}`);
       setMapCenter(coords);
     }
   })

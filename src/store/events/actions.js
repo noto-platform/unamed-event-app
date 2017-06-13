@@ -10,6 +10,6 @@ export const newEvent = () => (dispatch, getState, { firebase }) => {
 
   const create = (type, data) => dispatch(updateEntities(type, { new: data }));
 
-  create("events", { owner: auth.uid });
+  create("events", { title: "New event", owner: auth.uid, id: "new" });
   create("locations", { g: "?", l: map.center });
 };

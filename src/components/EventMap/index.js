@@ -7,17 +7,10 @@ import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 import { mapboxAccessToken } from "config";
 import entities, { mapEntityById } from "containers/Entities";
 import { markerInteractions } from "containers/MapInteractions";
-import { formInput, create, update, withDelete } from "containers/EventForm";
 
 import Marker from "./Marker";
 import Crosshair from "./Crosshair";
 import Button from "components/Buttons/FloatingActionButton";
-import EventForm from "components/Events/EventForm";
-
-const CreateEvent = compose(formInput, create)(EventForm);
-const UpdateEvent = compose(formInput, update)(EventForm);
-
-// const EventMarker = mapEntityByProp("events")(Marker);
 
 const EventMarker = compose(
   markerInteractions,
@@ -59,7 +52,7 @@ const EventMap = ({
                 coords={marker.l}
                 key={key}
                 id={key}
-                expanded={geo.distance(center, marker.l) < 0.1}
+                expanded={geo.distance(center, marker.l) < 0.2}
               />,
             locations
           )
@@ -71,12 +64,6 @@ const EventMap = ({
         onClick={onCreateNewEvent}
         positionBottom={mapHeight + 60}
       />
-
-      {/* TODO Where should we put this ? */}
-      {match.params.action === "create"
-        ? <CreateEvent center={center} />
-        : null}
-      {match.params.action === "update" ? <UpdateEvent /> : null}
     </div>
   );
 };

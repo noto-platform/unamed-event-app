@@ -10,7 +10,7 @@ import {
   mapProps
 } from "recompose";
 
-const EventContainer = ({
+const DraggableContainer = ({
   fullPageEnabled,
   positionBottom,
   setPosition,
@@ -32,7 +32,8 @@ const EventContainer = ({
 
 /**
  * TODO
- * This should be moved to other locations and refactored if it will be used
+ * - This should be moved to other locations and refactored if it will be used
+ * - Fix scroll inside list (mobile)
  */
 
 let uiUpSubscription = null;
@@ -43,6 +44,8 @@ const removeSubscription = subscription =>
   subscription ? subscription.unsubscribe() : null;
 
 const getBottomPosition = ({ style }) => Number(style.bottom.replace("px", ""));
+
+const getYPosition = e => (e.y ? e.y : e.changedTouches[0].clientY);
 
 function setClassName(el, className) {
   el.className = className;
@@ -64,11 +67,11 @@ const isNearMiddle = el =>
 const setFullPageIfEnabled = enabled =>
   enabled ? window.innerHeight : window.innerHeight / 2;
 
-export const EventContainerUI = compose(
+export const DraggableContainerUI = compose(
   withState("positionBottom", "setPosition", 50),
   lifecycle({
     componentDidMount() {
-      const { setPosition, fullPageEnabled } = this.props;
+      const { setPosition, fullPageEnabled, startHeight } = this.props;
       const wrapperElement = document.getElementById("wrapper");
 
       const uiDown$ = Rx.Observable.merge(
@@ -91,9 +94,9 @@ export const EventContainerUI = compose(
           return e.target.localName !== "input";
         })
         .switchMap(e => {
-          e.preventDefault();
+          // e.preventDefault();
           removeAnimation(wrapperElement);
-          startUiDownPosition = e.y || e.changedTouches[0].clientY;
+          startUiDownPosition = getYPosition(e);
           elementStartPosition = getBottomPosition(wrapperElement);
 
           uiUpSubscription = uiUp$.subscribe(() => {
@@ -114,15 +117,21 @@ export const EventContainerUI = compose(
           return uiMove$.takeUntil(uiUp$);
         });
 
-      // TODO fix
-      const getClientTouch = e => (e.y ? e.y : e.changedTouches[0].clientY);
-
       onDrag.subscribe(e => {
-        console.info(e);
         setPosition(
-          elementStartPosition + (startUiDownPosition - getClientTouch(e))
+          elementStartPosition + (startUiDownPosition - getYPosition(e))
         );
       });
+
+      // Ugly solution for initial animation if present. FIX!!!
+      if (startHeight) {
+        setClassName(
+          wrapperElement,
+          `${wrapperElement.className} event__wrapper--animate`
+        );
+
+        setTimeout(() => setPosition(startHeight));
+      }
     },
     componentWillUnmount() {
       removeSubscription(uiUpSubscription);
@@ -130,4 +139,4 @@ export const EventContainerUI = compose(
   })
 );
 
-export default EventContainerUI(EventContainer);
+export default DraggableContainerUI(DraggableContainer);

@@ -1,12 +1,16 @@
+/**
+ * TODO Not used ATM
+ */
+
 import React from "react";
-import "../EventContainer/index.css";
+import "../DraggableContainer/index.css";
 import {
   FORM_ACTION_UPDATE,
   FORM_ACTION_CREATE
 } from "../../../store/constants";
-import EventContainer from "../EventContainer";
+import DraggableContainer from "../DraggableContainer";
 
-const EventForm = ({
+const EventDetails = ({
   fields,
   onSubmit,
   onInput,
@@ -18,7 +22,7 @@ const EventForm = ({
 }) => {
   console.log(center);
   return (
-    <EventContainer fullPageEnabled={false}>
+    <DraggableContainer fullPageEnabled={false}>
       <div className="event__top-bar">
         <span className="title">New Event!</span>
         <div className="locations">
@@ -29,7 +33,7 @@ const EventForm = ({
       <div className="event__body">
         <input placeholder="Test title" type="text" />
       </div>
-    </EventContainer>
+    </DraggableContainer>
   );
 };
 
@@ -86,4 +90,4 @@ const EventForm = ({
 //   </p>
 // </form>;
 
-export default EventForm;
+export default EventDetails;
