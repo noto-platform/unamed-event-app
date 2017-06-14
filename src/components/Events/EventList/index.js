@@ -22,11 +22,9 @@ const EventList = ({ events, auth, history }) => {
             mapObjIndexed(
               (item, id) =>
                 <View style={styles.listItem} key={id}>
-                  <View>
-                    <Link to={`/events/${id}`}>
-                      <Text>{item.title}</Text>
-                    </Link>
-                  </View>
+                  <Link to={`/events/${id}`}>
+                    <Text>{item.title}</Text>
+                  </Link>
                 </View>,
               events
             )

@@ -5,7 +5,7 @@ import styles from "./styles.js";
 
 const DraggableContainer = ({ positionBottom, setPosition, children }) => {
   const handleMobileKeyboard = () => setPosition(window.innerHeight / 4);
-  // This was causing <Link> to prevent default. Fix.
+  // This was causing <Link> to prevent default. Fix when making create event.
   //onFocus={handleMobileKeyboard}
 
   return (
