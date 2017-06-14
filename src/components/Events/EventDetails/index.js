@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { Link } from "react-router-dom";
-import { View, Text, StyleSheet } from "react-primitives";
+import { View, Text, StyleSheet, Touchable } from "react-primitives";
 import DraggableContainer from "components/Events/DraggableContainer";
 import styles from "./styles.js";
 import containerStyles from "components/Events/DraggableContainer/styles.js";
@@ -21,7 +21,7 @@ const EventDetails = ({
     <View style={containerStyles.topBar} draggable={true}>
       <Text style={containerStyles.topBarTitle} draggable={true}>{title}</Text>
       <View style={containerStyles.topBarClose}>
-        <Link to="/events">
+        <Link to="/events" style={{ color: "#fff" }}>
           <i className="fa fa-times" aria-hidden="true" />
         </Link>
       </View>
@@ -48,7 +48,7 @@ const EventDetails = ({
       <View>
         {tags.map((tag, id) =>
           <View key={`tag_${id}`} style={styles.tag}>
-            #{tag}
+            <Text style={styles.tagText}>#{tag}</Text>
           </View>
         )}
       </View>

@@ -1,28 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 import color from "open-color";
+import { View, StyleSheet, Touchable, Text } from "react-primitives";
 
-const Button = styled.div`
-  position: absolute;
-  z-index: 10;
-  width: 60px;
-  height: 60px;
-  bottom: 60px;
-  right: 60px;
-  color: ${color.gray[9]};
-  font-size: 24px;
-  opacity: .9;
-  background: ${color.gray[0]};
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: bottom 0.1s ease;
-`;
+const styles = StyleSheet.create({
+  button: {
+    position: "absolute",
+    zIndex: 10,
+    width: 60,
+    height: 60,
+    bottom: 60,
+    right: 60,
+    backgroundColor: color.gray[0],
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.9
+  },
+  buttonText: {
+    color: color.gray[9],
+    fontSize: 24,
+    borderRadius: 3
+  }
+});
 
 const FloatingActionButton = ({ text, onClick, positionBottom }) =>
-  <Button onClick={onClick} style={{ bottom: `${positionBottom || 60}px` }}>
-    {text}
-  </Button>;
+  <Touchable onPress={onClick}>
+    <View style={[styles.button, { bottom: `${positionBottom || 60}px` }]}>
+      <Text style={styles.buttonText}>{text}</Text>
+    </View>
+  </Touchable>;
 
 export default FloatingActionButton;

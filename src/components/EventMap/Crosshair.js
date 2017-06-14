@@ -1,32 +1,35 @@
 import React from "react";
 import styled from "styled-components";
+import { View, StyleSheet, Touchable, Text } from "react-primitives";
 import color from "open-color";
 
-console.log(color);
-const Container = styled.div`
-  position: absolute;
-  pointer-events: none;
-  height: 50vh;
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: height 0.1s ease;
-`;
-
-const Point = styled.div`
-  width: 30px;
-  height: 30px;
-  border: 3px solid ${color.gray[7]};
-  background: rgba(0,0,0,.3);
-  border-radius: 50%;
-`;
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    height: "50vh",
+    width: "100%",
+    top: 0,
+    left: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  point: {
+    width: 30,
+    height: 30,
+    borderWidth: 3,
+    borderColor: color.gray[7],
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    borderRadius: "50%"
+  }
+});
 
 const Crosshair = ({ position }) =>
-  <Container style={{ height: `${window.innerHeight - position}px` }}>
-    <Point />
-  </Container>;
+  <View
+    style={[styles.container, { height: `${window.innerHeight - position}px` }]}
+    pointerEvents={"none"}
+  >
+    <View style={styles.point} />
+  </View>;
 
 export default Crosshair;

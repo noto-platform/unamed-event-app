@@ -1,6 +1,7 @@
 import React, { PropTypes } from "react";
 import { compose, withHandlers, mapProps } from "recompose";
 import { withRouter } from "react-router";
+import { View } from "react-primitives";
 
 import { setMapCenter } from "store/map/actions";
 import { selectMap, selectMarker } from "store/map/selectors";
@@ -27,11 +28,11 @@ const EventDetails = compose(mapEntityById("events"), entities("events"))(
 
 export const Events = ({ match, history, ...props }) => {
   return (
-    <div>
+    <View>
       <NearbyEvents />
       {!match.params.id && !match.params.action && <EventList />}
       {match.params.id && <EventDetails id={match.params.id} />}
-    </div>
+    </View>
   );
 };
 

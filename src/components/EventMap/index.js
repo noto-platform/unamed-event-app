@@ -2,6 +2,7 @@ import { compose, mapObjIndexed, values } from "ramda";
 import React from "react";
 import { withRouter } from "react-router";
 import PropTypes from "proptypes";
+import { View } from "react-primitives";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 
 import { mapboxAccessToken } from "config";
@@ -28,7 +29,7 @@ const EventMap = ({
   mapHeight
 }) => {
   return (
-    <div>
+    <View>
       <ReactMapboxGl
         style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
         accessToken={mapboxAccessToken}
@@ -59,9 +60,9 @@ const EventMap = ({
       <Button
         text="+"
         onClick={onCreateNewEvent}
-        positionBottom={mapHeight + 60}
+        positionBottom={mapHeight + 100}
       />
-    </div>
+    </View>
   );
 };
 
