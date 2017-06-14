@@ -2,28 +2,20 @@ import { compose, mapObjIndexed, values } from "ramda";
 import React from "react";
 import { withRouter } from "react-router";
 import PropTypes from "proptypes";
+import { View } from "react-primitives";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 
 import { mapboxAccessToken } from "config";
 import entities, { mapEntityById } from "containers/Entities";
 import { markerInteractions } from "containers/MapInteractions";
-import { formInput, create, update, withDelete } from "containers/EventForm";
 
 import Marker from "./Marker";
 import Crosshair from "./Crosshair";
 import Button from "components/Buttons/FloatingActionButton";
-import EventForm from "components/Events/EventForm";
 
-const CreateEvent = compose(formInput, create)(EventForm);
-const UpdateEvent = compose(formInput, update)(EventForm);
-
-// const EventMarker = mapEntityByProp("events")(Marker);
-
-const EventMarker = compose(
-  markerInteractions,
-  withRouter,
-  mapEntityById("events")
-)(Marker);
+const EventMarker = compose(markerInteractions, mapEntityById("events"))(
+  Marker
+);
 
 const EventMap = ({
   firebase: { geo },
@@ -33,10 +25,11 @@ const EventMap = ({
   locations = [],
   onMoveMap,
   onCreateNewEvent,
-  match
+  match,
+  mapHeight
 }) => {
   return (
-    <div>
+    <View>
       <ReactMapboxGl
         style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
         accessToken={mapboxAccessToken}
@@ -45,7 +38,8 @@ const EventMap = ({
         movingMethod="easeTo"
         onMoveEnd={onMoveMap}
         containerStyle={{
-          height: "50vh",
+          top: `-${mapHeight / 2}px`,
+          height: "100vh",
           width: "100vw"
         }}
       >
@@ -62,13 +56,13 @@ const EventMap = ({
           )
         )}
       </ReactMapboxGl>
-      <Crosshair />
-      <Button text="+" onClick={onCreateNewEvent} />
-
-      {/* TODO Where should we put this ? */}
-      {match.params.action === "create" ? <CreateEvent /> : null}
-      {match.params.action === "update" ? <UpdateEvent /> : null}
-    </div>
+      <Crosshair position={mapHeight} />
+      <Button
+        text="+"
+        onClick={onCreateNewEvent}
+        positionBottom={mapHeight + 100}
+      />
+    </View>
   );
 };
 

@@ -72,7 +72,6 @@ var eventsRef = db.ref("events/");
 //           uid: "djungeltrumman"
 //         }
 //       })();
-//       // eventsRef.child(event.id).set(event)
 //     })
 //   })
 //   .catch(err => {

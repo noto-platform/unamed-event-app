@@ -1,69 +1,29 @@
 import React from "react";
-import { Marker as MapboxMarker } from "react-mapbox-gl";
+import { Marker } from "react-mapbox-gl";
 import styled from "styled-components";
 import color from "open-color";
-import { Link } from "react-router-dom";
+import { View, Touchable, StyleSheet, Text } from "react-primitives";
 
-// state [SELECTED, VIEWING]
-const Marker = styled(MapboxMarker)`
-  width: ${({ expanded }) => (expanded ? 200 : 50)}px;
-  height: ${({ expanded }) => (expanded ? 100 : 50)}px;
-  background: ${color.gray[0]};
-  border-radius: 3px;
-  display: flex;
-  padding: 0 3px;
-  font-size: 18px;
-  flex-direction: column;
-  transition:
-    width 300ms cubic-bezier(0.165, 0.840, 0.440, 1.000),
-    height 300ms cubic-bezier(0.165, 0.840, 0.440, 1.000);
-  transition-timing-function: transition-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
-  transition-delay: .2s;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-break: 1;
-  opacity: .9;
-`;
+const styles = StyleSheet.create({
+  marker: {
+    width: 30,
+    height: 30,
+    backgroundColor: color.red[5],
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.9
+  }
+});
 
-const emojies = "🎭😂🍻🏞👾🤖".split("");
+const MapMarker = ({ coords, tags, onClick }) =>
+  <Marker coordinates={coords}>
+    <Touchable onPress={onClick}>
+      <View style={styles.marker}>
+        <Text>{(tags && tags[0]) || "New"}</Text>
+      </View>
+    </Touchable>
+  </Marker>;
 
-const MapMarker = ({
-  id,
-  start_time,
-  title,
-  owner,
-  coords,
-  tags,
-  expanded,
-  onClick
-}) => {
-  return (
-    <Marker expanded={expanded} coordinates={coords}>
-      <div>
-        <div onClick={onClick}>
-          <strong>{expanded ? title : tags[0]}</strong>
-          {expanded && <small><a href="#">{owner}</a></small>}
-        </div>
-        {expanded &&
-          <div>
-            <div><small>16:00 | 157 / 200</small></div>
-            <div>{title}</div>
-
-            {id === "new"
-              ? <div>
-                  <button>Save</button>
-                </div>
-              : <div>
-                  <Link to={`/events/${id}`}>view</Link>
-                  <Link to={`/events/${id}/attend`}>attend</Link>
-
-                  {/* TODO add update button in detail view and check if owner */}
-                  <Link to={`/events/${id}/edit`}>edit</Link>
-                </div>}
-          </div>}
-      </div>
-    </Marker>
-  );
-};
 export default MapMarker;

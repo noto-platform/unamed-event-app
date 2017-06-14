@@ -1,37 +1,38 @@
+import { mapObjIndexed, values } from "ramda";
 import React, { PropTypes } from "react";
+import { Link } from "react-router-dom";
+import { View, Text, StyleSheet } from "react-primitives";
 import { isEventOwner } from "store/events/selectors";
+import DraggableContainer from "../DraggableContainer";
+import containerStyles from "../DraggableContainer/styles.js";
+import styles from "./styles.js";
 
-const EventList = ({ events, auth, updateEvent, deleteEvent }) =>
-  <div
-    style={{
-      height: "50vh",
-      overflow: "scroll"
-    }}
-  >
-    {Object.keys(events).map(key => events[key]).map((item, id) => {
-      const onUpdate = () => updateEvent(item);
-      const onDelete = () => deleteEvent(item);
+const EventList = ({ events, auth, history }) => {
+  return (
+    <View>
+      <DraggableContainer fullPageEnabled={true} scrollEnabled={true}>
+        <View style={containerStyles.topBar} draggable={true}>
+          <Text style={containerStyles.topBarTitle} draggable={true}>
+            {Object.keys(events).length} upcoming events!
+          </Text>
+        </View>
 
-      return (
-        <div key={`event_${id}`} style={{ border: "1px solid #eee" }}>
-          <div><a href>{item.title}</a></div>
-
-          {isEventOwner(item.owner, auth)
-            ? <button onClick={onUpdate}>Edit</button>
-            : null}
-
-          {isEventOwner(item.owner, auth)
-            ? <button onClick={onDelete}>Delete</button>
-            : null}
-
-          <div>Owner: <a href>@{item.owner}</a></div>
-          <div>Desc: {item.description}</div>
-          <div>Start: {item.start_time}</div>
-          <div>End: {item.end_time}</div>
-          <div>Location: {item.lat} - {item.lng}</div>
-        </div>
-      );
-    })}
-  </div>;
+        <View style={containerStyles.body}>
+          {values(
+            mapObjIndexed(
+              (item, id) =>
+                <View style={styles.listItem} key={id}>
+                  <Link to={`/events/${id}`}>
+                    <Text>{item.title}</Text>
+                  </Link>
+                </View>,
+              events
+            )
+          )}
+        </View>
+      </DraggableContainer>
+    </View>
+  );
+};
 
 export default EventList;

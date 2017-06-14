@@ -1,56 +1,39 @@
-import React from "react";
-import PropTypes from "proptypes";
-import {
-  withCreateOrUpdate,
-  withDelete,
-  withEventActionState
-} from "../../containers/EventForm";
-import EventList from "./EventList";
-import EventForm from "./EventForm";
-import FloatingActionButton from "../Buttons/FloatingActionButton";
-import Modal from "../Modal";
-import { FORM_ACTION_UPDATE, FORM_ACTION_CREATE } from "../../store/constants";
+import React, { PropTypes } from "react";
+import { compose, withHandlers, mapProps } from "recompose";
+import { withRouter } from "react-router";
+import { View } from "react-primitives";
 
-const CreateEvent = withCreateOrUpdate(EventForm);
-const UpdateEvent = withCreateOrUpdate(EventForm);
-const ConfirmDeleteModal = withDelete(Modal);
+import { setMapCenter } from "store/map/actions";
+import { selectMap, selectMarker } from "store/map/selectors";
 
-const Events = ({
-  events,
-  auth,
-  createEventVisible,
-  toggleCreateEvent,
-  confirmDeleteEvent,
-  toggleConfirmDeleteModal,
-  editEvent,
-  setEditEvent
-}) => (
-  <div>
-    <EventList events={events} auth={auth} updateEvent={setEditEvent} />
-    {createEventVisible
-      ? <CreateEvent
-          formAction={FORM_ACTION_CREATE}
-          onClose={toggleCreateEvent}
-        />
-      : null}
+import EventMap from "components/EventMap";
+import entities, { mapEntityById } from "containers/Entities";
+import nearbySearch from "containers/NearbySearch";
+import mapInteractions from "containers/MapInteractions";
+import EventsView from "components/Events/EventList";
+import EventDetailView from "components/Events/EventDetails";
 
-    {editEvent
-      ? <UpdateEvent
-          formAction={FORM_ACTION_UPDATE}
-          updateEvent={editEvent}
-          onClose={setEditEvent}
-        />
-      : null}
+const NearbyEvents = compose(
+  withRouter,
+  mapInteractions,
+  entities("locations"),
+  nearbySearch
+)(EventMap);
 
-    {confirmDeleteEvent
-      ? <ConfirmDeleteModal
-          onCancel={toggleConfirmDeleteModal}
-          item={confirmDeleteEvent}
-        >
-          <h4>Delete {confirmDeleteEvent.title}?</h4>
-        </ConfirmDeleteModal>
-      : null}
-  </div>
+const EventList = compose(withRouter, entities("events"))(EventsView);
+
+const EventDetails = compose(mapEntityById("events"), entities("events"))(
+  EventDetailView
 );
 
-export default withEventActionState(Events);
+export const Events = ({ match, history, ...props }) => {
+  return (
+    <View>
+      <NearbyEvents />
+      {!match.params.id && !match.params.action && <EventList />}
+      {match.params.id && <EventDetails id={match.params.id} />}
+    </View>
+  );
+};
+
+export default Events;
