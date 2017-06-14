@@ -15,15 +15,6 @@ const getTouchesY = e =>
 
 const getYPosition = e => (e.y ? e.y : getTouchesY(e));
 
-function setClassName(el, className) {
-  el.className = className;
-}
-
-const removeAnimation = el =>
-  el.className.indexOf("event__wrapper--animate") > -1
-    ? setClassName(el, "event__wrapper")
-    : null;
-
 const isNearBottom = el =>
   getBottomPosition(el) < window.innerHeight / 3 / 2 ? "0" : null;
 
