@@ -3,7 +3,8 @@
  */
 
 import React from "react";
-import "../DraggableContainer/index.css";
+import containerStyle from "components/Events/DraggableContainer/style.js";
+import { View, Text } from "react-primitives";
 import {
   FORM_ACTION_UPDATE,
   FORM_ACTION_CREATE
@@ -23,16 +24,15 @@ const EventDetails = ({
   console.log(center);
   return (
     <DraggableContainer fullPageEnabled={false}>
-      <div className="event__top-bar">
-        <span className="title">New Event!</span>
-        <div className="locations">
-          LNG {center[0]} / LAT {center[1]}
-        </div>
-      </div>
+      <View style={containerStyle.topBar}>
+        <Text style={containerStyle.topBarTitle}>New Event!</Text>
+      </View>
 
-      <div className="event__body">
-        <input placeholder="Test title" type="text" />
-      </div>
+      <View style={containerStyle.body}>
+        {/* Fix common TextInput component like React Natives
+          <input placeholder="Test title" type="text" />
+        */}
+      </View>
     </DraggableContainer>
   );
 };

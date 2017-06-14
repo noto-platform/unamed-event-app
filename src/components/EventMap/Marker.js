@@ -1,27 +1,29 @@
 import React from "react";
-import { Marker as MapboxMarker } from "react-mapbox-gl";
+import { Marker } from "react-mapbox-gl";
 import styled from "styled-components";
 import color from "open-color";
-import { Link } from "react-router-dom";
+import { View, Touchable, StyleSheet, Text } from "react-primitives";
 
-const Marker = styled(MapboxMarker)`
-  width: 30px;
-  height: 30px;
-  background: ${color.red[5]};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: .9;
-`;
-
-const emojies = "🎭😂🍻🏞👾🤖".split("");
+const styles = StyleSheet.create({
+  marker: {
+    width: 30,
+    height: 30,
+    backgroundColor: color.red[5],
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.9
+  }
+});
 
 const MapMarker = ({ coords, tags, onClick }) =>
   <Marker coordinates={coords}>
-    <div onClick={onClick}>
-      {(tags && tags[0]) || "New"}
-    </div>
+    <Touchable onPress={onClick}>
+      <View style={styles.marker}>
+        <Text>{(tags && tags[0]) || "New"}</Text>
+      </View>
+    </Touchable>
   </Marker>;
 
 export default MapMarker;

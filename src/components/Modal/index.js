@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { View } from "react-primitives";
 
 // TODO Style as a popup/modal
 // Shall we add modal, button and other common components in sub folder common?
@@ -8,13 +9,13 @@ const Modal = ({ onConfirm, onCancel, item, children }) => {
   const handleConfirm = () => onConfirm(item);
 
   return (
-    <div>
+    <View>
       {children}
-      <div>
-        <button onClick={onConfirm}>Ok</button>
-        <button onClick={handleCancel}>Cancel</button>
-      </div>
-    </div>
+      <View>
+        <View onClick={onConfirm}>Ok</View>
+        <View onClick={handleCancel}>Cancel</View>
+      </View>
+    </View>
   );
 };
 

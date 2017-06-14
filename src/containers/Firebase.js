@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "proptypes";
+import { View } from "react-primitives";
 
 class Firebase extends React.PureComponent {
   static childContextTypes = {
@@ -13,7 +14,7 @@ class Firebase extends React.PureComponent {
   }
 
   render() {
-    return <div>{this.props.children}</div>;
+    return <View>{this.props.children}</View>;
   }
 }
 
