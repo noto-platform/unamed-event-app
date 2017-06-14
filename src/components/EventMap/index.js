@@ -39,8 +39,7 @@ const EventMap = ({
         containerStyle={{
           top: `-${mapHeight / 2}px`,
           height: "100vh",
-          width: "100vw",
-          transition: "top 0.1s ease"
+          width: "100vw"
         }}
       >
         {values(

@@ -1,19 +1,20 @@
 import React, { PropTypes } from "react";
-import "./index.css";
+import { View, Animated, StyleSheet } from "react-primitives";
 import DraggableInteractions from "containers/DraggableInteractions";
+import styles from "./styles.js";
 
 const DraggableContainer = ({ positionBottom, setPosition, children }) => {
   const handleMobileKeyboard = () => setPosition(window.innerHeight / 4);
+  // This was causing <Link> to prevent default. Fix.
+  //onFocus={handleMobileKeyboard}
 
   return (
-    <div
-      className="event__wrapper event__wrapper--animate"
+    <Animated.View
       id="wrapper"
-      style={{ bottom: `${positionBottom}px` }}
-      onFocus={handleMobileKeyboard}
+      style={[styles.wrapper, { bottom: positionBottom }]}
     >
       {children}
-    </div>
+    </Animated.View>
   );
 };
 

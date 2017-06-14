@@ -1,5 +1,6 @@
 import Rx from "rxjs/Rx";
 import { compose, lifecycle, withState } from "recompose";
+import { Animated } from "react-primitives";
 
 const WRAPPER_ID = "wrapper";
 
@@ -24,7 +25,7 @@ const removeAnimation = el =>
     : null;
 
 const isNearBottom = el =>
-  getBottomPosition(el) < window.innerHeight / 3 / 2 ? 50 : null;
+  getBottomPosition(el) < window.innerHeight / 3 / 2 ? "0" : null;
 
 const isNearMiddle = el =>
   getBottomPosition(el) < window.innerHeight / 3 * 2
@@ -32,14 +33,17 @@ const isNearMiddle = el =>
     : null;
 
 const setFullPageIfEnabled = enabled =>
-  enabled ? window.innerHeight : window.innerHeight / 2;
+  enabled ? window.innerHeight - 50 : window.innerHeight / 2;
 
 /**
  * Container
+ * TODO
+ * - Have to fix animation, not working now.
+ * - Dont rely on DOM
  */
 
 const DraggableInteractions = compose(
-  withState("positionBottom", "setPosition", 50),
+  withState("positionBottom", "setPosition", new Animated.Value(0)),
   lifecycle({
     componentDidMount() {
       const { setPosition, fullPageEnabled, startHeight } = this.props;
@@ -51,10 +55,9 @@ const DraggableInteractions = compose(
           Rx.Observable.fromEvent(wrapperElement, "mousedown"),
           Rx.Observable.fromEvent(wrapperElement, "touchstart")
         )
-        .filter(e => e.target.className === "event__top-bar")
+        .filter(e => e.target.draggable === true)
         .map(e => {
           e.preventDefault();
-          removeAnimation(wrapperElement);
           startPosition.down = getYPosition(e);
           startPosition.element = getBottomPosition(wrapperElement);
         });
@@ -69,28 +72,25 @@ const DraggableInteractions = compose(
           Rx.Observable.fromEvent(document, "mouseup"),
           Rx.Observable.fromEvent(document, "touchend")
         )
-        .map(() => {
-          setClassName(
-            wrapperElement,
-            `${wrapperElement.className} event__wrapper--animate`
-          );
-
+        .map(() =>
           setPosition(
             isNearBottom(wrapperElement) ||
               isNearMiddle(wrapperElement) ||
               setFullPageIfEnabled(fullPageEnabled)
-          );
-        });
+          )
+        );
 
       uiDown$
         .switchMap(() => uiMove$.takeUntil(uiUp$))
         .subscribe(e =>
           setPosition(
-            startPosition.element + (startPosition.down - getYPosition(e))
+            new Animated.Value(
+              startPosition.element + (startPosition.down - getYPosition(e))
+            )
           )
         );
 
-      if (startHeight) setTimeout(() => setPosition(startHeight));
+      if (startHeight) setPosition(startHeight);
     }
   })
 );

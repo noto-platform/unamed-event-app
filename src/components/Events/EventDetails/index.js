@@ -1,7 +1,9 @@
 import React, { PropTypes } from "react";
 import { Link } from "react-router-dom";
-
+import { View, Text, StyleSheet } from "react-primitives";
 import DraggableContainer from "components/Events/DraggableContainer";
+import styles from "./styles.js";
+import containerStyles from "components/Events/DraggableContainer/styles.js";
 
 const EventDetails = ({
   title,
@@ -16,43 +18,41 @@ const EventDetails = ({
     startHeight={window.innerHeight / 2}
     fullPageEnabled={true}
   >
-    <div className="event__top-bar">
-      <span className="title">{title}</span>
-      <Link to="/events" className="close">
-        <i className="fa fa-times" aria-hidden="true" />
-      </Link>
-    </div>
-    <div className="event__body">
-      <div className="event-list-item__field">
-        <div className="event-list-item__icon">
+    <View style={containerStyles.topBar} draggable={true}>
+      <Text style={containerStyles.topBarTitle} draggable={true}>{title}</Text>
+      <View style={containerStyles.topBarClose}>
+        <Link to="/events">
+          <i className="fa fa-times" aria-hidden="true" />
+        </Link>
+      </View>
+    </View>
+    <View style={containerStyles.body}>
+      <View style={styles.row}>
+        <View style={styles.icon}>
           <i className="fa fa-info-circle" aria-hidden="true" />
-        </div>
-        {description}
-      </div>
-      <div className="event-list-item__field">
-        <div className="event-list-item__icon">
+        </View>
+        <Text style={styles.text}>{description}</Text>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.icon}>
           <i className="fa fa-map-marker" aria-hidden="true" />
-        </div>
-        <span>
-          {lat} - {lng}
-        </span>
-      </div>
-      <div className="event-list-item__field">
-        <div className="event-list-item__icon">
+        </View>
+        <Text style={styles.text}>{lat} - {lng}</Text>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.icon}>
           <i className="fa fa-clock-o" aria-hidden="true" />
-        </div>
-        <span>
-          {openinghours}
-        </span>
-      </div>
-      <div>
+        </View>
+        <Text style={styles.text}>{openinghours}</Text>
+      </View>
+      <View>
         {tags.map((tag, id) =>
-          <div key={`tag_${id}`} className="event-list-item__tag">
+          <View key={`tag_${id}`} style={styles.tag}>
             #{tag}
-          </div>
+          </View>
         )}
-      </div>
-    </div>
+      </View>
+    </View>
   </DraggableContainer>;
 
 export default EventDetails;

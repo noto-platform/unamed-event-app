@@ -1,35 +1,39 @@
 import { mapObjIndexed, values } from "ramda";
 import React, { PropTypes } from "react";
 import { Link } from "react-router-dom";
-
-import "../DraggableContainer/index.css";
+import { View, Text, StyleSheet } from "react-primitives";
 import { isEventOwner } from "store/events/selectors";
 import DraggableContainer from "../DraggableContainer";
-import "./index.css";
+import containerStyles from "../DraggableContainer/styles.js";
+import styles from "./styles.js";
 
 const EventList = ({ events, auth, history }) => {
   return (
-    <div>
+    <View>
       <DraggableContainer fullPageEnabled={true} scrollEnabled={true}>
-        <div className="event__top-bar">
-          <span className="title">
+        <View style={containerStyles.topBar} draggable={true}>
+          <Text style={containerStyles.topBarTitle} draggable={true}>
             {Object.keys(events).length} upcoming events!
-          </span>
-        </div>
+          </Text>
+        </View>
 
-        <div className="event__body event__body--scroll">
+        <View style={containerStyles.body}>
           {values(
             mapObjIndexed(
               (item, id) =>
-                <Link className="event-list-item" key={id} to={`/events/${id}`}>
-                  <div><b>{item.title}</b></div>
-                </Link>,
+                <View style={styles.listItem} key={id}>
+                  <View>
+                    <Link to={`/events/${id}`}>
+                      <Text>{item.title}</Text>
+                    </Link>
+                  </View>
+                </View>,
               events
             )
           )}
-        </div>
+        </View>
       </DraggableContainer>
-    </div>
+    </View>
   );
 };
 
