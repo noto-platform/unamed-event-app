@@ -4,13 +4,12 @@ export const initialState = {};
 
 export const setInitialFormState = {
   title: "",
-  desc: "",
+  description: "",
   max_attendees: "",
-  start_time: "",
-  end_time: ""
+  openinghours: ""
 };
 
-export const isEventOwner = (owner, auth) => pickProviderId(auth) === owner;
+export const isEventOwner = (owner, auth) => auth.uid === owner;
 
 export const getEventById = (events, id) =>
   Object.keys(events).map(key => events[key]).find(item => item.id === id);

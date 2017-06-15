@@ -17,7 +17,7 @@ const EventList = ({ events, auth, history }) => {
           </Text>
         </View>
 
-        <View style={containerStyles.body}>
+        <View style={[containerStyles.body, containerStyles.scrollable]}>
           {values(
             mapObjIndexed(
               (item, id) =>

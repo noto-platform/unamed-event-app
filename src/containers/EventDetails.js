@@ -8,117 +8,117 @@ import {
   withState,
   mapProps
 } from "recompose";
+import * as R from "ramda";
 
-import { withRouter } from "react-router";
-import { FORM_ACTION_UPDATE, FORM_ACTION_CREATE } from "store/constants";
 import { selectAuth } from "store/auth/selectors";
 import { pickProviderId } from "store/auth/reducer";
-import { getMyLocation } from "store/locations/selectors";
 import { setInitialFormState } from "store/events/selectors";
 import { isEventOwner, getEventById } from "store/events/selectors";
+import ValidationSchema from "store/events/model";
 const t = require("tcomb-validation");
+
+export const eventDetails = compose(
+  connect(selectAuth),
+  mapProps(({ ...props }) => ({
+    ...props,
+    isOwner: isEventOwner(props.owner, props.auth)
+  }))
+);
+
+export const formInput = compose(
+  withState("formErrors", "setValidation", ["default"]),
+  withState("fields", "setFields", setInitialFormState),
+  withHandlers({
+    onInput: ({ fields, setFields, setValidation }) => ({ target }) => {
+      const newValues = { ...fields, [target.name]: target.value || "" };
+
+      setValidation(
+        R.compose(
+          R.flatten,
+          R.map(error => error.path),
+          R.flatten,
+          R.props(["errors"])
+        )(t.validate(newValues, ValidationSchema))
+      );
+
+      setFields(newValues);
+    },
+    onSave: ({ id, formErrors, fields, auth }) => () => {
+      if (!formErrors.length) {
+        const tags = getTags(fields.description);
+
+        // TODO send to firebase
+        alert(
+          JSON.stringify(
+            {
+              action: id === "new" ? "CREATE" : "UPDATE",
+              ...fields,
+              owner: auth.uid,
+              description: removeTagsFromString(fields.description, tags),
+              tags
+            },
+            null,
+            2
+          )
+        );
+      }
+    },
+    setDefaultEvent: ({
+      title,
+      description,
+      openinghours,
+      setFields,
+      tags = []
+    }) => () =>
+      setFields({
+        title,
+        description: description + getTagsAsString(tags),
+        openinghours
+      })
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { setDefaultEvent, owner } = this.props;
+      if (owner) setDefaultEvent();
+    },
+    componentDidUpdate(prevProps) {
+      const { setDefaultEvent } = this.props;
+      if (prevProps.owner !== this.props.owner) setDefaultEvent();
+    }
+  })
+);
+
+/**
+ * TODO probably move this to other location
+ */
+
+function getTagsAsString(tags) {
+  let tagString = "";
+  tags.forEach(tag => {
+    tagString += ` #${tag}`;
+  });
+  return tagString;
+}
+
+function removeTagsFromString(string, tags) {
+  let cleanString = string;
+  tags.forEach(tag => {
+    cleanString = cleanString
+      .replace(tag, "")
+      .replace("#", "")
+      .replace("  ", " ");
+  });
+  return cleanString;
+}
+
+function getTags(string) {
+  return string.match(/\#[a-zA-ZåäöÅÄÖ]+/gi).map(tag => tag.replace("#", ""));
+}
 
 /**
  * TODO
- * Just uncommented the code below for now. Will be used in Create / Edit
- * and so on.
+ * Connect this with delete button on detail view.
  */
-
-//
-// /**
-//  * Form validation
-//  * TODO Add this somewhere else?
-//  */
-// const correctStringInput = val => val.length > 0;
-// const isNumber = val => Number.isInteger(parseInt(val));
-// const ValidationSchema = t.struct({
-//   title: t.refinement(t.String, correctStringInput),
-//   desc: t.refinement(t.String, correctStringInput),
-//   start_time: t.refinement(t.Any, isNumber),
-//   end_time: t.refinement(t.Any, isNumber)
-// });
-//
-// export const formInput = compose(
-//   getContext({ firebase: PropTypes.object }),
-//   withRouter,
-//   connect(selectAuth),
-//   connect(getMyLocation),
-//   withState("validForm", "setValidation", false),
-//   withState("fields", "setFields", setInitialFormState),
-//   withHandlers({
-//     onInput: ({ fields, setFields, setValidation }) => ({ target }) => {
-//       const newValues = { ...fields, [target.name]: target.value };
-//       setValidation(t.validate(newValues, ValidationSchema).isValid());
-//       setFields(newValues);
-//     },
-//     cancelForm: ({ history }) => () => history.replace("/events/_")
-//   })
-// );
-//
-// export const create = compose(
-//   withHandlers({
-//     onSubmit: props => event => {
-//       event.preventDefault();
-//       const { auth, fields, me, validForm } = props;
-//       validForm
-//         ? console.log("Create", {
-//             // TODO Send to firebase
-//             ...fields,
-//             lat: me[0],
-//             lng: me[1],
-//             owner: pickProviderId(auth)
-//           })
-//         : console.log("Not valid");
-//     }
-//   })
-// );
-//
-// export const update = compose(
-//   withRouter,
-//   withHandlers({
-//     onSubmit: props => event => {
-//       event.preventDefault();
-//       const { auth, fields, me, validForm } = props;
-//       validForm
-//         ? console.log("Update", {
-//             // TODO Send to firebase
-//             ...fields,
-//             lat: me[0],
-//             lng: me[1],
-//             owner: pickProviderId(auth)
-//           })
-//         : console.log("Not valid");
-//     }
-//   }),
-//   lifecycle({
-//     componentDidMount() {
-//       const { firebase, match, setFields, auth, history } = this.props;
-//
-//       /**
-//        * TODO
-//        * Should we add this in redux instead ?
-//        * One problem is when the user goes directly in to update. I think we
-//        * need to make sure that the auth check is performed before,
-//        */
-//       firebase
-//         .database()
-//         .ref("/events/" + match.params.id)
-//         .once("value")
-//         .then(snapshot => snapshot.val())
-//         .then(
-//           event =>
-//             isEventOwner(event.owner, auth)
-//               ? setFields(event)
-//               : history.replace("/events")
-//         );
-//     }
-//   })
-// );
-//
-// /**
-//  * TODO
-//  * Connect this with delete button on detail view.
-//  */
 // export const withDelete = compose(
 //   getContext({ firebase: PropTypes.object }),
 //   withHandlers({

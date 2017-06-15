@@ -25,6 +25,7 @@ const App = ({ store, firebase, geolocation }) =>
 
       <Router>
         <Switch>
+          <Route path="/login" component={Auth} />
           <Route path="/events/:id?/:action?" component={EventComponent} />
           <Redirect to="/events" />
         </Switch>

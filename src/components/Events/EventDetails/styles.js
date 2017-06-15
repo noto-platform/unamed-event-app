@@ -24,7 +24,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  tagText: {}
+  tagText: {},
+  saveButton: {
+    marginTop: 10,
+    backgroundColor: "#eee",
+    padding: 10,
+    width: 100,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
 
 export default styles;

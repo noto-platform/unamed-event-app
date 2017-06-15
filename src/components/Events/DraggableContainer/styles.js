@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
     padding: "5px",
     width: "100%",
     height: "100%"
+  },
+  scrollable: {
+    overflowY: "scroll"
   }
 });
 

@@ -10,6 +10,7 @@ import EventMap from "components/EventMap";
 import entities, { mapEntityById } from "containers/Entities";
 import nearbySearch from "containers/NearbySearch";
 import mapInteractions from "containers/MapInteractions";
+import { eventDetails, formInput } from "containers/EventDetails";
 import EventsView from "components/Events/EventList";
 import EventDetailView from "components/Events/EventDetails";
 
@@ -22,9 +23,12 @@ const NearbyEvents = compose(
 
 const EventList = compose(withRouter, entities("events"))(EventsView);
 
-const EventDetails = compose(mapEntityById("events"), entities("events"))(
-  EventDetailView
-);
+const EventDetails = compose(
+  mapEntityById("events"),
+  entities("events"),
+  eventDetails,
+  formInput
+)(EventDetailView);
 
 export const Events = ({ match, history, ...props }) => {
   return (

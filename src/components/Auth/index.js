@@ -3,8 +3,7 @@ import PropTypes from "proptypes";
 import FacebookLogin from "react-facebook-login";
 import { View } from "react-primitives";
 
-const Auth = ({ auth, onLogin, onFacebookConnect }) => null;
-/*
+const Auth = ({ auth, onLogin, onFacebookConnect }) =>
   <View>
     {auth.providerData &&
       !auth.providerData[0] &&
@@ -18,7 +17,6 @@ const Auth = ({ auth, onLogin, onFacebookConnect }) => null;
     {auth && auth.uid
       ? <pre><small>{JSON.stringify(auth, null, 2)}</small></pre>
       : <button onClick={onLogin}>Login</button>}
-  </View>
-);
-*/
+  </View>;
+
 export default Auth;

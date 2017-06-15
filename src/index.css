@@ -8,3 +8,24 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/**
+ * Adding the style for TextInput in CSS.
+ * When we move to Native this will be included.
+ */
+
+textarea, input {
+  border: 0;
+  border-bottom: 2px solid #ddd;
+  width: 100%;
+  padding-bottom: 5px;
+  resize: none;
+}
+
+textarea:focus, input:focus {
+  border: 0;
+  border-bottom: 2px solid #1BCBAC;
+  width: 100%;
+  padding-bottom: 5px;
+  outline: 0;
+}
