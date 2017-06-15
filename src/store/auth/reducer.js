@@ -32,7 +32,7 @@ export const pickProviderId = auth =>
 
 export default handleActions(
   {
-    [a.changeAuthState]: (state, { payload }) => ({
+    [a.authStateChanged]: (state, { payload }) => ({
       ...state, // Stupid null-check
       ...pickAuth(payload || {})
     })

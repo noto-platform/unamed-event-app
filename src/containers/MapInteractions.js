@@ -20,7 +20,7 @@ import { selectMap, selectMarker } from "store/map/selectors";
 export const mapInteractions = compose(
   connect(selectMap, {
     // Event-creation actions should go somewhere else
-    onCreateNewEvent: newEvent,
+    newEvent,
     setMapCenter,
     setMapZoom
   }),
@@ -36,29 +36,15 @@ export const mapInteractions = compose(
   */
   onlyUpdateForKeys(["match", "event"]),
   withState("mapHeight", "setMapHeight", window.innerHeight),
-  mapProps(props => ({
+  mapProps(({ event, center, ...props }) => ({
     ...props,
-    center: props.event ? props.event.l : props.center
+    center: event || center
   })),
   lifecycle({
-    componentWillReceiveProps({
-      center,
-      event,
-      match,
-      setMapCenter,
-      setMapZoom
-    }) {
-      if (
-        event &&
-        match.params.resource === "events"
-        // match.params.id !== this.props.match.params.id
-      ) {
-        setMapCenter(event.l);
-        setMapZoom([14]);
+    componentWillReceiveProps({ center, match, setMapCenter }) {
+      if (center && match.params.id) {
+        setMapCenter(center);
       }
-
-      console.log("Do action: ", match.params.action);
-      console.log("with id: ", match.params.id);
     },
     componentDidMount() {
       const { setMapHeight } = this.props;
@@ -77,8 +63,15 @@ export const mapInteractions = compose(
     }
   }),
   withHandlers({
-    onDragStart: ({ history }) => map => console.log("Hej"),
-    onMoveMap: ({ setMapCenter }) => map => setMapCenter(map.getCenter())
+    onDragStart: ({ history }) => () => history.push("/events"),
+    onDragEnd: ({ history, setMapCenter }) => map =>
+      setMapCenter(map.getCenter()),
+
+    // TODO: Move to another container
+    onNewEvent: ({ history, newEvent }) => () => {
+      newEvent();
+      history.push("/events/new");
+    }
   })
 );
 
@@ -86,10 +79,9 @@ export const markerInteractions = compose(
   withRouter,
   connect(selectMarker, { setMapCenter }),
   withHandlers({
-    onClick: ({ id, coords, history, setMapCenter }) => () => {
-      history.push(`/events/${id}`);
-      setMapCenter(coords);
-    }
+    // TODO: Use <Link> instead
+    onClick: ({ id, coords, history, setMapCenter }) => () =>
+      history.push(`/events/${id}`)
   })
 );
 

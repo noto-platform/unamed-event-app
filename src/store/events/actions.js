@@ -13,12 +13,9 @@ export const newEvent = () => (dispatch, getState, { firebase }) => {
   create("events", {
     title: "New event",
     description: "New description",
-    openinghours: "23 - 00",
-    lat: map.center[0], // TODO check correct lat/lng
-    lng: map.center[1],
     tags: ["new"],
     owner: auth.uid,
     id: "new"
   });
-  create("locations", { g: "?", l: map.center });
+  create("locations", map.center);
 };

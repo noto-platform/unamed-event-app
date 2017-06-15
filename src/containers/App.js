@@ -21,6 +21,7 @@ const Auth = auth(AuthView);
 const App = ({ store, firebase, geolocation }) =>
   <Provider store={store}>
     <Firebase firebase={firebase}>
+      <Auth />
       <GeoLocation geolocation={geolocation} />
 
       <Router>
@@ -30,10 +31,6 @@ const App = ({ store, firebase, geolocation }) =>
           <Redirect to="/events" />
         </Switch>
       </Router>
-
-      {/* What to do with these? Currently just responsible for data fetch? */}
-      <Auth />
-
     </Firebase>
   </Provider>;
 

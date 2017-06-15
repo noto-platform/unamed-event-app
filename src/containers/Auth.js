@@ -2,16 +2,15 @@ import PropTypes from "proptypes";
 import { connect } from "react-redux";
 import { compose, lifecycle, getContext, withHandlers } from "recompose";
 
-import { changeAuthState, authFailure } from "store/auth/actions";
+import { changeAuthState, linkAccount } from "store/auth/actions";
 import { selectAuth } from "store/auth/selectors";
-import { linkAccount, signInAnonymously } from "store/auth/logic";
 
 const withAuth = compose(
   getContext({ firebase: PropTypes.object }),
-  connect(selectAuth, { changeAuthState, authFailure }),
+  connect(selectAuth, { changeAuthState, linkAccount }),
   withHandlers({
-    onLogin: signInAnonymously,
-    onFacebookConnect: linkAccount
+    onFacebookConnect: ({ linkAccount }) => ({ accessToken }) =>
+      linkAccount(accessToken)
   }),
   lifecycle({
     componentDidMount() {

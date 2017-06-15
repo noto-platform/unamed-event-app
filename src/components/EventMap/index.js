@@ -18,52 +18,39 @@ const EventMarker = compose(markerInteractions, mapEntityById("events"))(
 );
 
 const EventMap = ({
-  firebase: { geo },
   center,
   event,
   zoom,
   locations = [],
-  onMoveMap,
-  onCreateNewEvent,
-  match,
+  onDragStart,
+  onDragEnd,
+  onNewEvent,
   mapHeight
-}) => {
-  return (
-    <View>
-      <ReactMapboxGl
-        style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
-        accessToken={mapboxAccessToken}
-        center={event ? event.l : center}
-        zoom={zoom}
-        movingMethod="easeTo"
-        onMoveEnd={onMoveMap}
-        containerStyle={{
-          top: `-${mapHeight / 2}px`,
-          height: "100vh",
-          width: "100vw"
-        }}
-      >
-        {values(
-          mapObjIndexed(
-            (marker, key) =>
-              <EventMarker
-                coords={marker.l}
-                key={key}
-                id={key}
-                expanded={geo.distance(center, marker.l) < 0.2}
-              />,
-            locations
-          )
-        )}
-      </ReactMapboxGl>
-      <Crosshair position={mapHeight} />
-      <Button
-        text="+"
-        onClick={onCreateNewEvent}
-        positionBottom={mapHeight + 100}
-      />
-    </View>
-  );
-};
+}) =>
+  <View>
+    <ReactMapboxGl
+      style="mapbox://styles/carlbarrdahl/ciq9x1qqx0000dunptnzgrl9s"
+      accessToken={mapboxAccessToken}
+      center={center}
+      zoom={zoom}
+      movingMethod="easeTo"
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      containerStyle={{
+        top: `-${mapHeight / 2}px`,
+        height: "100vh",
+        width: "100vw"
+      }}
+    >
+      {values(
+        mapObjIndexed(
+          (marker, key) => <EventMarker coords={marker} key={key} id={key} />,
+          locations
+        )
+      )}
+    </ReactMapboxGl>
+    <Crosshair position={mapHeight} />
+    <Button text="+" onClick={onNewEvent} positionBottom={mapHeight + 100} />
+  </View>;
 
 export default EventMap;
