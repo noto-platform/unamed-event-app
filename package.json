@@ -5,6 +5,7 @@
   "dependencies": {
     "@react-mapboxgl/core": "^2.0.2",
     "camelcase": "^4.1.0",
+    "date-fns": "^1.28.5",
     "eslint-config-prettier": "^2.1.1",
     "eslint-plugin-prettier": "^2.1.1",
     "eslint-plugin-react": "^7.0.1",
@@ -30,15 +31,16 @@
     "reselect": "^3.0.1",
     "rxjs": "^5.4.0",
     "styled-components": "^2.0.0",
+    "targaryen": "^3.0.1",
     "tcomb-validation": "^3.3.0"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.1",
     "husky": "^0.13.4",
     "lint-staged": "^3.5.1",
-    "react-scripts": "1.0.7",
-    "@kadira/storybook": "^2.21.0"
+    "react-scripts": "1.0.7"
   },
   "scripts": {
     "start": "NODE_PATH=src react-scripts start",

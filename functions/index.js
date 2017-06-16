@@ -1,8 +1,48 @@
-var functions = require("firebase-functions");
+const R = require("ramda");
+const functions = require("firebase-functions");
+const firebase = require("firebase-admin");
+const GeoFire = require("geofire");
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// })
+const serviceAccount = require("./serviceAccountKey.json");
+const api = require("./api");
+const spider = require("./spider");
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://eventplatform-1430d.firebaseio.com/"
+});
+
+const db = firebase.database();
+firebase.geo = new GeoFire(db.ref("locations"));
+
+const ONE_DAY = 1000 * 60 * 60 * 24;
+const removeEvents = () => {
+  console.log("Finding events to remove...");
+  const events = db.ref("events").orderByChild("end_time").endAt(Date.now());
+
+  events.once("value", e => {
+    const res = e.val();
+    if (res) {
+      const remove = R.map(e => null, res);
+      console.log("Removing: " + R.keys(remove).length + "events...");
+      db.ref("events").update(remove);
+      db.ref("locations").update(remove);
+    }
+  });
+};
+
+const crawlEvents = () => {
+  console.log("Crawling events...");
+  spider.crawl().then(events => {
+    console.log("Adding: " + events.length + " events...");
+    events.forEach(api.event.create({ firebase: firebase }));
+  });
+};
+
+exports.removeEvents = functions.pubsub
+  .topic("daily-tick")
+  .onPublish(removeEvents);
+
+exports.crawlEvents = functions.pubsub
+  .topic("daily-tick")
+  .onPublish(crawlEvents);

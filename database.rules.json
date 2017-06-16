@@ -1,6 +1,16 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "events": {
+      ".read": "auth != null",
+      "$id": {
+        ".write": "newData.child('owner').val() == auth.uid",
+        ".validate": "newData.hasChildren(['id', 'owner', 'start_time', 'title', 'lat', 'lng'])"
+      }
+    },
+
+    "locations": {
+      ".read": "auth != null",
+      ".indexOn": ["end_time"]
+    }
   }
 }

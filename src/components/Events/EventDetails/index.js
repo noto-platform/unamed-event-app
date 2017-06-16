@@ -5,6 +5,7 @@ import TextInput from "components/common/TextInput";
 import DraggableContainer from "components/Events/DraggableContainer";
 import styles from "./styles.js";
 import containerStyles from "components/Events/DraggableContainer/styles.js";
+import format from "date-fns/format";
 
 const EventDetails = ({
   title,
@@ -12,7 +13,8 @@ const EventDetails = ({
   lat,
   lng,
   owner,
-  openinghours,
+  start_time,
+  end_time,
   tags = [],
   isOwner,
   onInput,
@@ -86,7 +88,9 @@ const EventDetails = ({
           <View style={styles.icon}>
             <i className="fa fa-clock-o" aria-hidden="true" />
           </View>
-          {getTextField("openinghours", openinghours, "23 - 00", false)}
+          {getTextField("start_time", format(start_time, "HH:mm"), "", false)}
+          {" - "}
+          {getTextField("end_time", format(end_time, "HH:mm"), "", false)}
         </View>
         <View>
           {!isOwner

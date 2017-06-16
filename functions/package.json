@@ -3,16 +3,21 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "dev": "backpack dev",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "logs:cron": "gcloud app logs tail -s default"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "backpack-core": "^0.3.0",
+    "date-fns": "^1.28.5",
     "firebase": "^4.1.2",
     "firebase-admin": "^4.1.2",
     "firebase-functions": "^0.5",
     "geofire": "^4.1.2",
-    "jest-cli": "^20.0.4"
+    "jest-cli": "^20.0.4",
+    "ramda": "^0.24.1"
   },
   "private": true,
   "version": "1.0.0",
