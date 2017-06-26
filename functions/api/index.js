@@ -12,8 +12,6 @@ exports.event = {
         owner: event.owner || api.auth.uid
       })
     );
-
-    api.firebase.geo.set(ref.key, [event.lng, event.lat]);
   },
   update: api => event =>
     api.firebase.database().ref("events/" + event.id).update(event),

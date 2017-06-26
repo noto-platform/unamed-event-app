@@ -39,10 +39,28 @@ const crawlEvents = () => {
   });
 };
 
+const createLocation = event => {
+  // Do nothing on update
+  if (event.data.previous.exists()) {
+    return;
+  }
+  // Remove location
+  if (!event.data.exists()) {
+    return firebase.geo.remove(event.params.pushId);
+  }
+  const data = event.data.val();
+
+  return firebase.geo.set(event.params.pushId, [data.lng, data.lat]);
+};
+
 exports.removeEvents = functions.pubsub
   .topic("daily-tick")
   .onPublish(removeEvents);
 
 exports.crawlEvents = functions.pubsub
-  .topic("daily-tick")
+  .topic("hourly-tick")
   .onPublish(crawlEvents);
+
+exports.createLocation = functions.database
+  .ref("/events/{pushId}")
+  .onWrite(createLocation);

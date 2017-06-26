@@ -6,8 +6,6 @@ export default {
       id: ref.key,
       owner: auth.uid
     });
-
-    firebase.geo.set(ref.key, [fields.lng, fields.lat]);
   },
   onUpdate: ({ firebase }) => event =>
     firebase.database().ref(`events/${event.id}`).update(event),
